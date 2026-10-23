@@ -19,5 +19,7 @@ CANDIDATES = {
 MIN_YEARS = 10
 MIN_PEERS = 5
 WEIGHTS = {"coverage": 0.25, "peers": 0.25, "testability": 0.25, "recognisability": 0.25}
-# SEC asks for "Name email"; override with env SEC_USER_AGENT to use your own contact.
-SEC_USER_AGENT = os.environ.get("SEC_USER_AGENT", "Frank Mayer research@example.com")
+# SEC asks for "Name email". Read from env SEC_USER_AGENT (an Actions secret in CI);
+# documented fallback is the project contact below.
+SEC_USER_AGENT_FALLBACK = "Par Bahrae githubproproject@proton.me"
+SEC_USER_AGENT = os.environ.get("SEC_USER_AGENT") or SEC_USER_AGENT_FALLBACK

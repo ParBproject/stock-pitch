@@ -73,6 +73,11 @@ Yahoo Finance daily prices, SEC EDGAR XBRL 10-K facts (as first reported, filed 
 FRED 10-year Treasury yield, and the Ken French data library. Known gaps are listed in the summary and never filled
 with estimates.
 
+**SEC User-Agent.** SEC EDGAR asks automated clients for a `"Name email"` User-Agent. The code reads it from the
+`SEC_USER_AGENT` environment variable; if that is unset it falls back to the project contact
+`Par Bahrae githubproproject@proton.me`. In GitHub Actions the value comes from the `SEC_USER_AGENT` repository secret.
+Set your own when you re-fetch: `export SEC_USER_AGENT="Your Name you@example.com"`.
+
 ## Reproduce
 
 ```bash
