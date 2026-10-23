@@ -1,0 +1,19 @@
+{
+  "as_of": "2026-09-30",
+  "fetched_at_utc": "2026-10-23T01:05:42Z",
+  "sources": {
+    "prices_adj_close.csv": "Yahoo Finance via yfinance, split/dividend-adjusted close",
+    "volume.csv": "Yahoo Finance via yfinance, daily share volume",
+    "ff5_daily.csv": "Kenneth R. French Data Library, Fama/French 5 factors (2x3) daily, percent",
+    "mom_daily.csv": "Kenneth R. French Data Library, momentum factor daily, percent",
+    "fundamentals_annual.csv": "SEC EDGAR XBRL companyfacts, 10-K annual facts filed on/before as_of"
+  },
+  "yfinance_version": "1.7.0",
+  "sha256": {
+    "ff5_daily.csv": "90cd36f0319fedf0546fefd9290bd5178b7ddbbfcabea2870c224d6d491e9347",
+    "fundamentals_annual.csv": "69ed3ffd7024fa65a851d77159708395f1407e9d0f1c464903edecd02d867890",
+    "mom_daily.csv": "b71c3cadcfd97d5e752717adb9e3fec8dd6c03dab01d504d373189e05aed7911",
+    "prices_adj_close.csv": "cd513bc9d934ac68eb4912be0c0e2f5851a579adc392f1d1f3f945db5aa7fcd1",
+    "volume.csv": "1e6442b4ff4a495c4ee9705bcf178e5a6a1fb6a1d1ba64c96940c03cd69ff78a"
+  }
+}
