@@ -1,6 +1,6 @@
 # UNH equity pitch: a long call built like a quant research project
 
-[![CI](https://github.com/ParBproject/stock-pitch/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ParBproject/stock-pitch/actions/workflows/ci.yml)
+<a href="https://github.com/ParBproject/stock-pitch/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/ParBproject/stock-pitch/actions/workflows/ci.yml/badge.svg?branch=main"></a>
 
 **[Live web deck and scenario panel](https://parbproject.github.io/stock-pitch/)** · **[PDF deck](deck/pitch.pdf)** · [HTML deck](https://parbproject.github.io/stock-pitch/deck/) · [Results JSON](results/summary.json)
 
