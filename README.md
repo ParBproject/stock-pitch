@@ -106,6 +106,24 @@ Notebooks `02` to `06` compute everything below from frozen snapshots and write 
 - **Charts:** the chart theme in `src/pitch/plotting.py` reads the same tokens.
 - **Tests:** `tests/test_design.py` checks contrast, the motion range and the reduced-motion rule, that the generated CSS is current, and that components use tokens only.
 
+## M6: interactive web deck
+
+**Live:** https://parbproject.github.io/stock-pitch/
+
+- **Stack:** a static Vite build in `web/`, with ECharts loaded on demand, styled with the M5 tokens.
+- **Data:** read from `web/public/data/pitch.json`, which `src/pitch/webdata.py` exports from `results/summary.json` and the frozen snapshots.
+- **Interaction:**
+  - brush and zoom on prices, with stats recomputed for the selected window
+  - a peer filter linked to the comps chart
+  - comps drill-down, where clicking a bar opens a detail card and adds that peer to the price chart
+  - a DCF growth × WACC heatmap with hover and click-through
+  - scenario drill-down
+  - factor toggles with zoom
+  - backtest zoom
+- **Mobile:** below 720px it becomes a single column, and you swipe between panels.
+- **Lighthouse (live site):** 99 performance on mobile, 100 on desktop; 100 for accessibility, best practices and SEO.
+- **Deploy:** `make web`, then push `web/dist` to the `gh-pages` branch. No GitHub Actions workflow is needed.
+
 ## Reproduce
 
 ```bash
