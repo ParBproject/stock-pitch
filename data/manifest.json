@@ -1,0 +1,15 @@
+{
+  "as_of": "2026-09-30",
+  "fetched_at_utc": "2026-10-23T00:51:09Z",
+  "sources": {
+    "prices.csv": "Yahoo Finance via yfinance (auto-adjusted close)",
+    "meta.json": "Yahoo Finance via yfinance Ticker.info (industry, market cap at fetch time)",
+    "sec_fy_coverage.json": "SEC EDGAR XBRL companyfacts (10-K FY facts ending on/before as_of)"
+  },
+  "yfinance_version": "1.7.0",
+  "sha256": {
+    "prices.csv": "042bd5d91317457cc32ffb8f8bddb572fbc3d66695777d8c53cf6cbfea5ad1bc",
+    "meta.json": "241614ed2b0f62ce09c0920310d305897643c7460d52c2a0588a6c230ac58765",
+    "sec_fy_coverage.json": "a29bee7eaddeaede39b916332c05ec5875849b2367d888cd32621ea2e628b952"
+  }
+}
