@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pitch"
+version = "0.1.0"
+description = "Reproducible long-only stock pitch: data, thesis and interactive deck"
+requires-python = ">=3.11"
+dependencies = ["pandas>=2.2"]
+
+[project.optional-dependencies]
+fetch = ["yfinance>=0.2.50", "requests>=2.31"]
+notebooks = ["jupyter", "nbconvert"]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 130
+extend-include = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
