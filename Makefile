@@ -11,6 +11,8 @@ data:
 	$(PY) scripts/fetch_data.py
 	$(PY) scripts/fetch_m2.py
 	PYTHONPATH=src:scripts $(PY) scripts/fetch_m3.py
+	PYTHONPATH=src:scripts $(PY) scripts/fetch_pitch.py UNH
+	PYTHONPATH=src:scripts $(PY) scripts/fetch_pitch.py COST
 
 screen:
 	$(PY) scripts/build_screen.py

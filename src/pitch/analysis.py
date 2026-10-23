@@ -12,13 +12,55 @@ import pandas as pd
 import statsmodels.api as sm
 from scipy.optimize import brentq
 
+from pitch import data as _data
 from pitch.config import AS_OF
-from pitch.data import RAW, load_factors, load_fundamentals, load_prices, load_returns
-from pitch.universe import BENCHMARK, PEERS, TICKER
+from pitch.universe import ACTIVE, BENCHMARK, PITCHES
 
 TRADING_DAYS = 252
 FACTORS = ["Mkt-RF", "SMB", "HML", "RMW", "CMA", "Mom"]
-FINANCIALS = ["AXP", "COF", "SYF", "ALLY"]  # balance-sheet lenders: EV/EBITDA and FCF yield are not meaningful
+
+# The pitch being analysed. Every function below reads it; switch with set_pitch().
+_STATE = {"ticker": ACTIVE}
+
+
+def set_pitch(ticker: str) -> None:
+    if ticker not in PITCHES:
+        raise KeyError(ticker)
+    _STATE["ticker"] = ticker
+
+
+def _t() -> str:
+    return _STATE["ticker"]
+
+
+def _peers() -> list[str]:
+    return PITCHES[_t()]["peers"]
+
+
+def _fin() -> list[str]:
+    """Balance-sheet lenders: EV/EBITDA and FCF yield are not meaningful for them."""
+    return PITCHES[_t()]["financials"]
+
+
+def _raw():
+    return PITCHES[_t()]["raw"]
+
+
+def load_prices():
+    return _data.load_prices(_raw())
+
+
+def load_returns():
+    return _data.load_returns(_raw())
+
+
+def load_factors():
+    return _data.load_factors(_raw())
+
+
+def load_fundamentals():
+    return _data.load_fundamentals(_raw())
+
 
 ASSUMPTIONS = {
     "terminal_growth": {"value": 0.03, "source": "Assumption: roughly long-run nominal US GDP growth; kept below the 10y yield"},
@@ -34,7 +76,7 @@ ASSUMPTIONS = {
 
 # ---------- helpers ----------
 def all_fundamentals() -> pd.DataFrame:
-    extra = pd.read_csv(RAW / "fundamentals_extra.csv", parse_dates=["period_end", "filed"])
+    extra = pd.read_csv(_raw() / "fundamentals_extra.csv", parse_dates=["period_end", "filed"])
     return pd.concat([load_fundamentals(), extra], ignore_index=True)
 
 
@@ -55,7 +97,7 @@ def total_debt(ticker: str, period_end: pd.Timestamp) -> float:
 
 
 def shares() -> pd.DataFrame:
-    return pd.read_csv(RAW / "shares_outstanding.csv").set_index("ticker")
+    return pd.read_csv(_raw() / "shares_outstanding.csv").set_index("ticker")
 
 
 def price_at_asof(ticker: str) -> float:
@@ -63,7 +105,7 @@ def price_at_asof(ticker: str) -> float:
 
 
 def rf_10y() -> float:
-    d = pd.read_csv(RAW / "dgs10_daily.csv", parse_dates=["date"]).set_index("date")["DGS10"]
+    d = pd.read_csv(_raw() / "dgs10_daily.csv", parse_dates=["date"]).set_index("date")["DGS10"]
     return float(d.loc[:AS_OF].iloc[-1]) / 100
 
 
@@ -74,7 +116,7 @@ def r(x: float, n: int = 4) -> float | None:
 # ---------- 02 factor model ----------
 def factor_model() -> tuple[dict, pd.DataFrame]:
     f = load_factors()
-    ret = load_returns()[TICKER]
+    ret = load_returns()[_t()]
     df = f.join(ret.rename("ret"), how="inner").dropna()
     y = df["ret"] - df["RF"]
     X = sm.add_constant(df[FACTORS])
@@ -93,7 +135,7 @@ def factor_model() -> tuple[dict, pd.DataFrame]:
         "alpha_annual": r(fit.params["const"] * TRADING_DAYS),
         "alpha_t": r(fit.tvalues["const"], 2),
         "r_squared": r(fit.rsquared),
-        "method": "OLS of daily V excess return on FF5 + momentum, Newey-West (5 lags) t-stats; rolling 252-day betas every 5 days",
+        "method": "OLS of daily excess return on FF5 + momentum, Newey-West (5 lags) t-stats; rolling 252-day betas every 5 days",
     }
     return out, rolling
 
@@ -102,7 +144,7 @@ def factor_model() -> tuple[dict, pd.DataFrame]:
 def comps() -> pd.DataFrame:
     sh = shares()
     rows = []
-    for t in [TICKER, *PEERS]:
+    for t in [_t(), *_peers()]:
         fy = fy_table(t)
         last = fy.index[fy["net_income"].notna()].max()
         row = fy.loc[last]
@@ -111,15 +153,22 @@ def comps() -> pd.DataFrame:
         ebitda = row.get("operating_income", np.nan) + row.get("depreciation_amortization", np.nan)
         fcf = row.get("operating_cash_flow", np.nan) - row.get("capex", np.nan)
         gaps = []
-        if t in FINANCIALS:
+        if t in _fin():
             gaps.append("lender: EV/EBITDA and FCF yield not meaningful (debt and cash flows are operating items)")
             ev_ebitda = fcf_yield = np.nan
         else:
-            ev_ebitda = (mcap + debt - cash) / ebitda
+            ev_ebitda = (mcap + debt - cash) / ebitda if ebitda > 0 else np.nan
             fcf_yield = fcf / mcap
-        for m in ("operating_income", "depreciation_amortization", "capex"):
-            if t not in FINANCIALS and not np.isfinite(row.get(m, np.nan)):
-                gaps.append(f"{m} not reported in XBRL")
+        if t not in _fin():
+            for m in ("operating_income", "depreciation_amortization", "capex", "cash"):
+                if not np.isfinite(row.get(m, np.nan)):
+                    gaps.append(f"{m} not reported in XBRL")
+            if not np.isfinite(debt):
+                gaps.append("total debt not reported in XBRL")
+        if row["net_income"] <= 0:
+            gaps.append("net loss: P/E not meaningful")
+        if np.isfinite(ebitda) and ebitda <= 0:
+            gaps.append("negative EBITDA: EV/EBITDA not meaningful")
         rows.append(
             {
                 "ticker": t,
@@ -127,7 +176,7 @@ def comps() -> pd.DataFrame:
                 "price": price_at_asof(t),
                 "market_cap": mcap,
                 "ev_ebitda": ev_ebitda,
-                "pe": mcap / row["net_income"],
+                "pe": mcap / row["net_income"] if row["net_income"] > 0 else np.nan,
                 "fcf_yield": fcf_yield,
                 "gaps": "; ".join(gaps),
             }
@@ -137,31 +186,31 @@ def comps() -> pd.DataFrame:
 
 # ---------- 04 DCF ----------
 def fcf_history() -> pd.Series:
-    fy = fy_table(TICKER)
+    fy = fy_table(_t())
     return (fy["operating_cash_flow"] - fy["capex"]).dropna()
 
 
 def wacc_inputs() -> dict:
-    fy = fy_table(TICKER)
+    fy = fy_table(_t())
     last = fy.index.max()
     prev = fy.index[-2]
-    px = load_returns()[[TICKER, BENCHMARK]].loc[:AS_OF].dropna()
+    px = load_returns()[[_t(), BENCHMARK]].loc[:AS_OF].dropna()
     px = px[px.index > pd.Timestamp(AS_OF) - pd.DateOffset(years=ASSUMPTIONS["beta_window_years"]["value"])]
     beta = px.cov().iloc[0, 1] / px[BENCHMARK].var()
-    ff3 = pd.read_csv(RAW / "ff3_monthly.csv")
+    ff3 = pd.read_csv(_raw() / "ff3_monthly.csv")
     erp = ff3["Mkt-RF"].astype(float).mean() / 100 * 12
     rf = rf_10y()
-    debt = total_debt(TICKER, last)
-    avg_debt = (debt + total_debt(TICKER, prev)) / 2
+    debt = total_debt(_t(), last)
+    avg_debt = (debt + total_debt(_t(), prev)) / 2
     kd = fy.loc[last, "interest_expense"] / avg_debt
     tax = fy.loc[last, "income_tax"] / fy.loc[last, "pretax_income"]
-    mcap = price_at_asof(TICKER) * shares().loc[TICKER, "shares_outstanding"]
+    mcap = price_at_asof(_t()) * shares().loc[_t(), "shares_outstanding"]
     ke = rf + beta * erp
     we = mcap / (mcap + debt)
     wacc = we * ke + (1 - we) * kd * (1 - tax)
     return {
         "risk_free": {"value": r(rf), "source": f"FRED DGS10 on {AS_OF}"},
-        "beta": {"value": r(beta), "source": "5y daily V vs SPY returns to as-of (OLS slope)"},
+        "beta": {"value": r(beta), "source": "5y daily stock vs SPY returns to as-of (OLS slope)"},
         "equity_risk_premium": {
             "value": r(erp),
             "source": f"Ken French Mkt-RF, arithmetic mean 1926-07 to {ff3['month'].iloc[-1]}, x12",
@@ -175,7 +224,7 @@ def wacc_inputs() -> dict:
 
 
 def stage1_growth() -> float:
-    """Median of rolling 5-year FCF CAGRs over V's FY history (FY2010 onward, positive FCF only)."""
+    """Median of rolling 5-year FCF CAGRs over the stock's FY history (FY2010 onward, positive FCF only)."""
     s = fcf_history()
     s = s[s.index >= "2010-01-01"]
     cagr = (s / s.shift(5)) ** (1 / 5) - 1
@@ -185,7 +234,7 @@ def stage1_growth() -> float:
 def dcf_value(g1: float, wacc: float, gt: float | None = None) -> float:
     gt = ASSUMPTIONS["terminal_growth"]["value"] if gt is None else gt
     n = ASSUMPTIONS["fade_years"]["value"]
-    fy = fy_table(TICKER)
+    fy = fy_table(_t())
     last = fy.index.max()
     fcf = fcf_history().iloc[-1]
     pv = 0.0
@@ -194,15 +243,15 @@ def dcf_value(g1: float, wacc: float, gt: float | None = None) -> float:
         fcf *= 1 + g
         pv += fcf / (1 + wacc) ** t
     pv += fcf * (1 + gt) / (wacc - gt) / (1 + wacc) ** n
-    equity = pv - total_debt(TICKER, last) + fy.loc[last, "cash"]
-    return equity / shares().loc[TICKER, "shares_outstanding"]
+    equity = pv - total_debt(_t(), last) + fy.loc[last, "cash"]
+    return equity / shares().loc[_t(), "shares_outstanding"]
 
 
 def dcf() -> dict:
     w = wacc_inputs()
     wacc = w["wacc"]["value"]
     g1 = stage1_growth()
-    price = price_at_asof(TICKER)
+    price = price_at_asof(_t())
     value = dcf_value(g1, wacc)
     implied_g1 = brentq(lambda g: dcf_value(g, wacc) - price, -0.5, 1.0)
     return {
@@ -241,7 +290,7 @@ def risk() -> dict:
         w = rets.loc[start:AS_OF]
         out[label] = {
             "start": w.index[0].strftime("%Y-%m-%d"),
-            TICKER: risk_metrics(w[TICKER], w[BENCHMARK]),
+            _t(): risk_metrics(w[_t()], w[BENCHMARK]),
             BENCHMARK: risk_metrics(w[BENCHMARK], w[BENCHMARK]),
         }
     return out
@@ -267,7 +316,7 @@ def _perf(x: pd.Series) -> dict:
 def backtest() -> tuple[dict, pd.DataFrame]:
     prices = load_prices()
     rets = load_returns()
-    p, ret = prices[TICKER], rets[TICKER].fillna(0.0)
+    p, ret = prices[_t()], rets[_t()].fillna(0.0)
     cost = ASSUMPTIONS["trading_cost_bps"]["value"] / 1e4
     grid = ASSUMPTIONS["sma_grid"]["value"]
     train = ASSUMPTIONS["train_years"]["value"]
@@ -279,11 +328,11 @@ def backtest() -> tuple[dict, pd.DataFrame]:
         chosen[year] = best
         oos.append(_strategy(ret, p, best, cost).loc[f"{year}-01-01" : min(f"{year}-12-31", AS_OF)])
     strat = pd.concat(oos)
-    curves = pd.DataFrame({"strategy": strat, "buy_hold_V": ret.loc[strat.index], "SPY": rets[BENCHMARK].loc[strat.index]})
+    curves = pd.DataFrame({"strategy": strat, "buy_hold": ret.loc[strat.index], "SPY": rets[BENCHMARK].loc[strat.index]})
     out = {
         "oos_start": strat.index[0].strftime("%Y-%m-%d"),
         "oos_end": strat.index[-1].strftime("%Y-%m-%d"),
-        "signal": "long V when close > SMA(window), else cash; signal acts next day; window re-picked each Jan 1 by best trailing-3y Sharpe",
+        "signal": "long the stock when close > SMA(window), else cash; signal acts next day; window re-picked each Jan 1 by best trailing-3y Sharpe",
         "windows_chosen": {str(k): v for k, v in chosen.items()},
         **{k: _perf(curves[k]) for k in curves},
     }
@@ -304,5 +353,5 @@ def scenarios() -> dict:
         g = float(cagr.quantile(q))
         v = dcf_value(g, wacc + dw)
         out[name] = {"stage1_growth": r(g), "wacc": r(wacc + dw), "target": r(v, 2), "upside": r(v / price - 1)}
-    out["method"] = "stage-1 growth at the 25th/50th/75th percentile of V's rolling 5y FCF CAGRs; WACC +/-0.5pp"
+    out["method"] = "stage-1 growth at the 25th/50th/75th percentile of the stock's rolling 5y FCF CAGRs; WACC +/-0.5pp"
     return out

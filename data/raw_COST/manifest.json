@@ -1,0 +1,18 @@
+{
+  "as_of": "2026-09-30",
+  "ticker": "COST",
+  "fetched_at_utc": "2026-10-23T01:27:49Z",
+  "sources": "same as data/raw/manifest.json (Yahoo Finance, Ken French Data Library, SEC EDGAR XBRL, FRED DGS10)",
+  "yfinance_version": "1.7.0",
+  "sha256": {
+    "dgs10_daily.csv": "22e85800d089df57cbbf5268716db1a7a42001da84079d6a7bd9f1e7420302e7",
+    "ff3_monthly.csv": "017d5b7f4fe90d32749a8cd46cef18c8652077f980be8e15385d47790feac1f5",
+    "ff5_daily.csv": "90cd36f0319fedf0546fefd9290bd5178b7ddbbfcabea2870c224d6d491e9347",
+    "fundamentals_annual.csv": "82a219f3e26b905d3390c5b981e6caf4e3961ef786df68f70575d45f5178d758",
+    "fundamentals_extra.csv": "a1bcd6e9f7dcfccffedfd8dc1c8736e1a90424c0ff5d6ac4b112778859a5b0d6",
+    "mom_daily.csv": "b71c3cadcfd97d5e752717adb9e3fec8dd6c03dab01d504d373189e05aed7911",
+    "prices_adj_close.csv": "fdfe761755c813c8ba4418b7d8ba1af7184c2b245ed83608ebbc9e53c6b14c3b",
+    "shares_outstanding.csv": "e4b2ad80763aa01b4fece2df912a63a4ab91e81a0bd94637bab6886734a85f55",
+    "volume.csv": "f2cd19f1667e965a0edee90967f7edf3c3ef60ba259fccce8b1bfc5ddf4aacd0"
+  }
+}

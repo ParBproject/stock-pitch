@@ -5,10 +5,10 @@ import pytest
 
 from pitch import data
 from pitch.config import AS_OF
-from pitch.summary import build_summary
+from pitch.summary import build_pitch
 from pitch.universe import ALL_TICKERS, CIKS, PEERS, TICKER
 
-SUMMARY = json.loads((data.ROOT / "results" / "summary.json").read_text())
+SUMMARY = json.loads((data.ROOT / "results" / "archive" / "V_summary.json").read_text())  # V data (M2)
 
 
 def test_manifest_hashes_match():
@@ -61,7 +61,7 @@ def test_fundamentals_point_in_time():
 
 
 def test_summary_reproducible_and_pinned():
-    assert build_summary() == SUMMARY
+    assert build_pitch("V") == SUMMARY
     assert SUMMARY["ticker"] == "V" and SUMMARY["as_of"] == "2026-09-30"
     assert SUMMARY["data"]["prices"]["V"] == {"first": "2014-01-02", "last": "2026-09-30", "n_days": 3205}
     assert SUMMARY["data"]["factors"]["last"] == "2026-08-31"
