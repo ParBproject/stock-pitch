@@ -41,11 +41,32 @@ All snapshots for **V** are frozen as of **2026-09-30** in [`data/raw/`](data/ra
 
 `src/pitch/data.py` provides offline loaders that check the hashes. `results/summary.json` holds the data coverage now. Its analysis fields stay `null` until M3 computes them. `make all` rebuilds the screen, the summary and the notebooks, then runs lint and tests offline. `make data` re-fetches the data, which needs a network connection.
 
-## M3: analysis
+## M3: analysis (re-picked: UNH)
 
-Notebooks `02` to `06` compute everything below from the frozen snapshots and write figures to [`figures/`](figures). All numbers are in [`results/summary.json`](results/summary.json), with the source of every assumption and WACC input. Tests pin these numbers.
+Notebooks `02` to `06` compute everything below from frozen snapshots and write figures to [`figures/<TICKER>/`](figures). V, the first pick, showed no upside, so the pitch moved to **UNH**, the next stock on the M1 shortlist. UNH and COST (the third on the shortlist) were run with **the same code, methods and assumptions as V**, with nothing tuned. Each ticker's data sits in its own `data/raw_<TICKER>/` folder with hashes. All numbers are in [`results/summary.json`](results/summary.json), with the source of every assumption and WACC input. Tests pin these numbers.
 
 <!-- m3:start -->
+| Ticker | Price | DCF value | Upside | Bear | Base | Bull | WACC | Price-implied growth | Sharpe B&H | Supports long? |
+|---|---|---|---|---|---|---|---|---|---|---|
+| UNH | 367.08 | 526.64 | 43.5% | 354.47 | 526.64 | 764.68 | 8.0% | 6.0% | 0.49 | yes (base case) |
+| COST | 910.34 | 410.96 | -54.9% | 284.63 | 410.96 | 496.94 | 10.9% | 38.5% | 0.99 | no |
+
+### UNH (active pitch)
+- **DCF (base):** 526.64 per share vs as-of price 367.08, so upside is **43.5%**. WACC 8.0%, stage-1 growth 13.7%, terminal growth 3.0%.
+- **Reverse DCF:** the price implies 6.0% stage-1 FCF growth, fading to terminal over 10 years.
+- **Scenarios:** bear 354.47 (-3.4%), base 526.64 (43.5%), bull 764.68 (108.3%).
+- **Factor betas** (2014-01-03 to 2026-08-31, R² 0.23): Mkt-RF +0.82 (t 13.3), SMB -0.12 (t -2.0), HML +0.13 (t 1.8), RMW +0.26 (t 4.3), CMA +0.09 (t 0.8), Mom +0.08 (t 1.7). Alpha 5.9% a year (t 0.81).
+- **Backtest** (2017-01-03 to 2026-09-30, out-of-sample, net of costs), Sharpe with rf = 0: trend strategy 0.29, buy-and-hold UNH 0.49, SPY 0.87.
+
+### COST (compared, same methods; [`results/compare/COST_summary.json`](results/compare/COST_summary.json))
+- **DCF (base):** 410.96 per share vs as-of price 910.34, so upside is **-54.9%**. WACC 10.9%, stage-1 growth 16.3%, terminal growth 3.0%.
+- **Reverse DCF:** the price implies 38.5% stage-1 FCF growth, fading to terminal over 10 years.
+- **Scenarios:** bear 284.63 (-68.7%), base 410.96 (-54.9%), bull 496.94 (-45.4%).
+- **Factor betas** (2014-01-03 to 2026-08-31, R² 0.36): Mkt-RF +0.72 (t 23.2), SMB -0.13 (t -3.4), HML -0.29 (t -7.0), RMW +0.51 (t 10.8), CMA +0.18 (t 2.4), Mom +0.04 (t 1.5). Alpha 8.2% a year (t 1.74).
+- **Backtest** (2017-01-03 to 2026-09-30, out-of-sample, net of costs), Sharpe with rf = 0: trend strategy 0.59, buy-and-hold COST 0.99, SPY 0.87.
+
+### V (archived first pick; [`results/archive/V_summary.json`](results/archive/V_summary.json))
+*Dropped after M3: the base DCF gave 199.15 vs a 359.33 price (-44.6%), even the bull case was -25.5%, and the price implied 28.4% stage-1 FCF growth vs a 12.9% historical median. Frank re-picked from the shortlist with the same methods and assumptions (no tuning).*
 - **DCF (base):** 199.15 per share vs as-of price 359.33, so upside is **-44.6%**. WACC 11.6%, stage-1 growth 12.9%, terminal growth 3.0%.
 - **Reverse DCF:** the price implies 28.4% stage-1 FCF growth, fading to terminal over 10 years.
 - **Scenarios:** bear 166.71 (-53.6%), base 199.15 (-44.6%), bull 267.85 (-25.5%).
@@ -53,17 +74,18 @@ Notebooks `02` to `06` compute everything below from the frozen snapshots and wr
 - **Backtest** (2017-01-03 to 2026-09-30, out-of-sample, net of costs), Sharpe with rf = 0: trend strategy 0.10, buy-and-hold V 0.79, SPY 0.87.
 <!-- m3:end -->
 
-**Reading this honestly:** under these inputs the DCF does **not** support a long position. The price implies much faster FCF growth than V's own history. The walk-forward trend signal also failed to beat buy-and-hold. The main caveats are listed below.
-- The ERP is the long-run arithmetic mean, which is high.
-- The 10-year yield on the as-of date is 5.29%.
-- The share count is from Yahoo.
-- The DCF discounting convention is conservative.
+**Reading this honestly:**
+- UNH is the only one of the three whose base-case DCF is above its price (+43.5%), and the price implies only 6.0% stage-1 FCF growth.
+- Its bear case is slightly below the price (−3.4%), so this is a long thesis with downside, not a margin of safety in every scenario.
+- **UNH caveats to address in the deck:**
+  - The 8.0% WACC rests on a low 5-year beta of 0.41. That beta reflects a period when UNH's own news dominated its returns (R² 0.23).
+  - FY2025 FCF ($16.1B) is down from $25.7B in FY2023, while stage-1 growth uses the long-run median of 13.7%.
+  - The trend signal and buy-and-hold both lag SPY on Sharpe.
+- COST and V both price in far more growth than their history supports.
 
-M4 has to address this before the deck takes a side.
-
-![Rolling betas](figures/02_rolling_betas.png)
-![Backtest](figures/05_backtest.png)
-![Scenarios](figures/06_scenarios.png)
+![UNH scenarios](figures/UNH/06_scenarios.png)
+![UNH DCF sensitivity](figures/UNH/04_dcf_growth_sensitivity.png)
+![UNH backtest](figures/UNH/05_backtest.png)
 
 ## Reproduce
 

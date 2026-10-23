@@ -1,56 +1,56 @@
 {
-  "ticker": "V",
+  "ticker": "UNH",
   "as_of": "2026-09-30",
   "peers": [
-    "MA",
-    "AXP",
-    "PYPL",
-    "COF",
-    "SYF",
-    "ALLY"
+    "ELV",
+    "CI",
+    "HUM",
+    "CNC",
+    "MOH",
+    "CVS"
   ],
   "benchmark": "SPY",
   "screen": {
     "chosen": "V",
-    "total": 0.8426
+    "total": 0.7942
   },
   "data": {
-    "manifest_fetched_at_utc": "2026-10-23T01:05:42Z",
+    "manifest_fetched_at_utc": "2026-10-23T01:27:43Z",
     "prices": {
-      "V": {
+      "UNH": {
         "first": "2014-01-02",
         "last": "2026-09-30",
         "n_days": 3205
       },
-      "MA": {
+      "ELV": {
         "first": "2014-01-02",
         "last": "2026-09-30",
         "n_days": 3205
       },
-      "AXP": {
+      "CI": {
         "first": "2014-01-02",
         "last": "2026-09-30",
         "n_days": 3205
       },
-      "PYPL": {
-        "first": "2015-07-06",
-        "last": "2026-09-30",
-        "n_days": 2827
-      },
-      "COF": {
+      "HUM": {
         "first": "2014-01-02",
         "last": "2026-09-30",
         "n_days": 3205
       },
-      "SYF": {
-        "first": "2014-07-31",
+      "CNC": {
+        "first": "2014-01-02",
         "last": "2026-09-30",
-        "n_days": 3060
+        "n_days": 3205
       },
-      "ALLY": {
-        "first": "2014-01-28",
+      "MOH": {
+        "first": "2014-01-02",
         "last": "2026-09-30",
-        "n_days": 3188
+        "n_days": 3205
+      },
+      "CVS": {
+        "first": "2014-01-02",
+        "last": "2026-09-30",
+        "n_days": 3205
       },
       "SPY": {
         "first": "2014-01-02",
@@ -64,286 +64,306 @@
       "n_days": 3184
     },
     "fundamentals_fy": {
-      "ALLY": {
+      "CI": {
         "diluted_shares": {
-          "n_years": 17,
-          "first": "2009-12-31",
+          "n_years": 10,
+          "first": "2016-12-31",
           "last": "2025-12-31"
         },
         "eps_diluted": {
-          "n_years": 17,
-          "first": "2009-12-31",
+          "n_years": 10,
+          "first": "2016-12-31",
           "last": "2025-12-31"
         },
         "net_income": {
-          "n_years": 17,
-          "first": "2009-12-31",
+          "n_years": 10,
+          "first": "2016-12-31",
           "last": "2025-12-31"
         },
         "operating_cash_flow": {
-          "n_years": 17,
-          "first": "2009-12-31",
+          "n_years": 10,
+          "first": "2016-12-31",
+          "last": "2025-12-31"
+        },
+        "operating_income": {
+          "n_years": 10,
+          "first": "2016-12-31",
           "last": "2025-12-31"
         },
         "revenue": {
+          "n_years": 10,
+          "first": "2016-12-31",
+          "last": "2025-12-31"
+        },
+        "stockholders_equity": {
+          "n_years": 11,
+          "first": "2015-12-31",
+          "last": "2025-12-31"
+        },
+        "total_assets": {
+          "n_years": 9,
+          "first": "2017-12-31",
+          "last": "2025-12-31"
+        },
+        "missing_metrics": []
+      },
+      "CNC": {
+        "diluted_shares": {
+          "n_years": 18,
+          "first": "2008-12-31",
+          "last": "2025-12-31"
+        },
+        "eps_diluted": {
+          "n_years": 18,
+          "first": "2008-12-31",
+          "last": "2025-12-31"
+        },
+        "net_income": {
+          "n_years": 18,
+          "first": "2008-12-31",
+          "last": "2025-12-31"
+        },
+        "operating_cash_flow": {
+          "n_years": 18,
+          "first": "2008-12-31",
+          "last": "2025-12-31"
+        },
+        "operating_income": {
+          "n_years": 18,
+          "first": "2008-12-31",
+          "last": "2025-12-31"
+        },
+        "revenue": {
+          "n_years": 18,
+          "first": "2008-12-31",
+          "last": "2025-12-31"
+        },
+        "stockholders_equity": {
+          "n_years": 19,
+          "first": "2007-12-31",
+          "last": "2025-12-31"
+        },
+        "total_assets": {
           "n_years": 17,
           "first": "2009-12-31",
           "last": "2025-12-31"
         },
+        "missing_metrics": []
+      },
+      "CVS": {
+        "diluted_shares": {
+          "n_years": 19,
+          "first": "2007-12-29",
+          "last": "2025-12-31"
+        },
+        "eps_diluted": {
+          "n_years": 19,
+          "first": "2007-12-29",
+          "last": "2025-12-31"
+        },
+        "net_income": {
+          "n_years": 19,
+          "first": "2007-12-29",
+          "last": "2025-12-31"
+        },
+        "operating_cash_flow": {
+          "n_years": 19,
+          "first": "2007-12-29",
+          "last": "2025-12-31"
+        },
+        "operating_income": {
+          "n_years": 19,
+          "first": "2007-12-29",
+          "last": "2025-12-31"
+        },
+        "revenue": {
+          "n_years": 19,
+          "first": "2007-12-29",
+          "last": "2025-12-31"
+        },
         "stockholders_equity": {
-          "n_years": 21,
-          "first": "2009-06-30",
+          "n_years": 20,
+          "first": "2007-12-29",
           "last": "2025-12-31"
         },
         "total_assets": {
+          "n_years": 19,
+          "first": "2008-12-31",
+          "last": "2025-12-31"
+        },
+        "missing_metrics": []
+      },
+      "ELV": {
+        "diluted_shares": {
+          "n_years": 18,
+          "first": "2008-12-31",
+          "last": "2025-12-31"
+        },
+        "eps_diluted": {
+          "n_years": 19,
+          "first": "2007-12-31",
+          "last": "2025-12-31"
+        },
+        "net_income": {
+          "n_years": 19,
+          "first": "2007-12-31",
+          "last": "2025-12-31"
+        },
+        "operating_cash_flow": {
+          "n_years": 19,
+          "first": "2007-12-31",
+          "last": "2025-12-31"
+        },
+        "operating_income": {
+          "n_years": 18,
+          "first": "2008-12-31",
+          "last": "2025-12-31"
+        },
+        "revenue": {
+          "n_years": 19,
+          "first": "2007-12-31",
+          "last": "2025-12-31"
+        },
+        "stockholders_equity": {
+          "n_years": 20,
+          "first": "2006-12-31",
+          "last": "2025-12-31"
+        },
+        "total_assets": {
+          "n_years": 18,
+          "first": "2008-12-31",
+          "last": "2025-12-31"
+        },
+        "missing_metrics": []
+      },
+      "HUM": {
+        "diluted_shares": {
+          "n_years": 18,
+          "first": "2008-12-31",
+          "last": "2025-12-31"
+        },
+        "eps_diluted": {
+          "n_years": 19,
+          "first": "2007-12-31",
+          "last": "2025-12-31"
+        },
+        "net_income": {
+          "n_years": 19,
+          "first": "2007-12-31",
+          "last": "2025-12-31"
+        },
+        "operating_cash_flow": {
+          "n_years": 19,
+          "first": "2007-12-31",
+          "last": "2025-12-31"
+        },
+        "operating_income": {
+          "n_years": 19,
+          "first": "2007-12-31",
+          "last": "2025-12-31"
+        },
+        "revenue": {
+          "n_years": 19,
+          "first": "2007-12-31",
+          "last": "2025-12-31"
+        },
+        "stockholders_equity": {
+          "n_years": 20,
+          "first": "2006-12-31",
+          "last": "2025-12-31"
+        },
+        "total_assets": {
+          "n_years": 18,
+          "first": "2008-12-31",
+          "last": "2025-12-31"
+        },
+        "missing_metrics": []
+      },
+      "MOH": {
+        "diluted_shares": {
           "n_years": 16,
           "first": "2010-12-31",
           "last": "2025-12-31"
         },
-        "missing_metrics": [
-          "operating_income"
-        ]
-      },
-      "AXP": {
-        "diluted_shares": {
-          "n_years": 19,
-          "first": "2007-12-31",
-          "last": "2025-12-31"
-        },
         "eps_diluted": {
-          "n_years": 14,
-          "first": "2007-12-31",
+          "n_years": 16,
+          "first": "2010-12-31",
           "last": "2025-12-31"
         },
         "net_income": {
-          "n_years": 19,
-          "first": "2007-12-31",
+          "n_years": 16,
+          "first": "2010-12-31",
           "last": "2025-12-31"
         },
         "operating_cash_flow": {
-          "n_years": 14,
-          "first": "2007-12-31",
+          "n_years": 16,
+          "first": "2010-12-31",
           "last": "2025-12-31"
         },
         "operating_income": {
-          "n_years": 3,
-          "first": "2007-12-31",
-          "last": "2009-12-31"
+          "n_years": 16,
+          "first": "2010-12-31",
+          "last": "2025-12-31"
         },
         "revenue": {
-          "n_years": 12,
-          "first": "2008-12-31",
+          "n_years": 16,
+          "first": "2010-12-31",
           "last": "2025-12-31"
         },
         "stockholders_equity": {
-          "n_years": 20,
-          "first": "2006-12-31",
-          "last": "2025-12-31"
-        },
-        "total_assets": {
-          "n_years": 18,
-          "first": "2008-12-31",
-          "last": "2025-12-31"
-        },
-        "missing_metrics": []
-      },
-      "COF": {
-        "diluted_shares": {
           "n_years": 17,
           "first": "2009-12-31",
           "last": "2025-12-31"
         },
-        "eps_diluted": {
-          "n_years": 19,
-          "first": "2007-12-31",
-          "last": "2025-12-31"
-        },
-        "net_income": {
-          "n_years": 19,
-          "first": "2007-12-31",
-          "last": "2025-12-31"
-        },
-        "operating_cash_flow": {
-          "n_years": 19,
-          "first": "2007-12-31",
-          "last": "2025-12-31"
-        },
-        "revenue": {
-          "n_years": 17,
-          "first": "2009-12-31",
-          "last": "2025-12-31"
-        },
-        "stockholders_equity": {
-          "n_years": 23,
-          "first": "2006-12-31",
-          "last": "2025-12-31"
-        },
         "total_assets": {
-          "n_years": 18,
-          "first": "2008-12-31",
-          "last": "2025-12-31"
-        },
-        "missing_metrics": [
-          "operating_income"
-        ]
-      },
-      "MA": {
-        "diluted_shares": {
-          "n_years": 19,
-          "first": "2007-12-31",
-          "last": "2025-12-31"
-        },
-        "eps_diluted": {
-          "n_years": 19,
-          "first": "2007-12-31",
-          "last": "2025-12-31"
-        },
-        "net_income": {
-          "n_years": 19,
-          "first": "2007-12-31",
-          "last": "2025-12-31"
-        },
-        "operating_cash_flow": {
-          "n_years": 19,
-          "first": "2007-12-31",
-          "last": "2025-12-31"
-        },
-        "operating_income": {
-          "n_years": 19,
-          "first": "2007-12-31",
-          "last": "2025-12-31"
-        },
-        "revenue": {
-          "n_years": 19,
-          "first": "2007-12-31",
-          "last": "2025-12-31"
-        },
-        "stockholders_equity": {
-          "n_years": 20,
-          "first": "2006-12-31",
-          "last": "2025-12-31"
-        },
-        "total_assets": {
-          "n_years": 18,
-          "first": "2008-12-31",
-          "last": "2025-12-31"
-        },
-        "missing_metrics": []
-      },
-      "PYPL": {
-        "diluted_shares": {
-          "n_years": 13,
-          "first": "2013-12-31",
-          "last": "2025-12-31"
-        },
-        "eps_diluted": {
-          "n_years": 13,
-          "first": "2013-12-31",
-          "last": "2025-12-31"
-        },
-        "net_income": {
-          "n_years": 13,
-          "first": "2013-12-31",
-          "last": "2025-12-31"
-        },
-        "operating_cash_flow": {
-          "n_years": 13,
-          "first": "2013-12-31",
-          "last": "2025-12-31"
-        },
-        "operating_income": {
-          "n_years": 13,
-          "first": "2013-12-31",
-          "last": "2025-12-31"
-        },
-        "revenue": {
-          "n_years": 13,
-          "first": "2013-12-31",
-          "last": "2025-12-31"
-        },
-        "stockholders_equity": {
-          "n_years": 14,
-          "first": "2012-12-31",
-          "last": "2025-12-31"
-        },
-        "total_assets": {
-          "n_years": 12,
-          "first": "2014-12-31",
-          "last": "2025-12-31"
-        },
-        "missing_metrics": []
-      },
-      "SYF": {
-        "diluted_shares": {
-          "n_years": 14,
-          "first": "2012-12-31",
-          "last": "2025-12-31"
-        },
-        "eps_diluted": {
-          "n_years": 14,
-          "first": "2012-12-31",
-          "last": "2025-12-31"
-        },
-        "net_income": {
-          "n_years": 14,
-          "first": "2012-12-31",
-          "last": "2025-12-31"
-        },
-        "operating_cash_flow": {
-          "n_years": 14,
-          "first": "2012-12-31",
-          "last": "2025-12-31"
-        },
-        "stockholders_equity": {
           "n_years": 15,
           "first": "2011-12-31",
           "last": "2025-12-31"
         },
-        "total_assets": {
-          "n_years": 13,
-          "first": "2013-12-31",
+        "missing_metrics": []
+      },
+      "UNH": {
+        "diluted_shares": {
+          "n_years": 19,
+          "first": "2007-12-31",
           "last": "2025-12-31"
         },
-        "missing_metrics": [
-          "operating_income",
-          "revenue"
-        ]
-      },
-      "V": {
+        "eps_diluted": {
+          "n_years": 19,
+          "first": "2007-12-31",
+          "last": "2025-12-31"
+        },
         "net_income": {
           "n_years": 19,
-          "first": "2007-09-30",
-          "last": "2025-09-30"
+          "first": "2007-12-31",
+          "last": "2025-12-31"
         },
         "operating_cash_flow": {
           "n_years": 19,
-          "first": "2007-09-30",
-          "last": "2025-09-30"
+          "first": "2007-12-31",
+          "last": "2025-12-31"
         },
         "operating_income": {
           "n_years": 19,
-          "first": "2007-09-30",
-          "last": "2025-09-30"
+          "first": "2007-12-31",
+          "last": "2025-12-31"
         },
         "revenue": {
           "n_years": 19,
-          "first": "2007-09-30",
-          "last": "2025-09-30"
+          "first": "2007-12-31",
+          "last": "2025-12-31"
         },
         "stockholders_equity": {
           "n_years": 20,
-          "first": "2006-09-30",
-          "last": "2025-09-30"
+          "first": "2006-12-31",
+          "last": "2025-12-31"
         },
         "total_assets": {
           "n_years": 18,
-          "first": "2008-09-30",
-          "last": "2025-09-30"
+          "first": "2008-12-31",
+          "last": "2025-12-31"
         },
-        "missing_metrics": [
-          "diluted_shares",
-          "eps_diluted"
-        ]
+        "missing_metrics": []
       }
     }
   },
@@ -393,88 +413,88 @@
       "n_days": 3183
     },
     "betas": {
-      "Mkt-RF": 1.0083,
-      "SMB": -0.1963,
-      "HML": 0.0893,
-      "RMW": 0.2192,
-      "CMA": -0.1278,
-      "Mom": -0.0383
+      "Mkt-RF": 0.8186,
+      "SMB": -0.1161,
+      "HML": 0.1332,
+      "RMW": 0.2637,
+      "CMA": 0.0936,
+      "Mom": 0.079
     },
     "t_stats": {
-      "Mkt-RF": 40.58,
-      "SMB": -4.89,
-      "HML": 1.92,
-      "RMW": 4.0,
-      "CMA": -1.73,
-      "Mom": -1.22
+      "Mkt-RF": 13.27,
+      "SMB": -2.05,
+      "HML": 1.82,
+      "RMW": 4.34,
+      "CMA": 0.83,
+      "Mom": 1.73
     },
-    "alpha_annual": 0.0354,
-    "alpha_t": 0.83,
-    "r_squared": 0.5315,
-    "method": "OLS of daily V excess return on FF5 + momentum, Newey-West (5 lags) t-stats; rolling 252-day betas every 5 days"
+    "alpha_annual": 0.0595,
+    "alpha_t": 0.81,
+    "r_squared": 0.2307,
+    "method": "OLS of daily excess return on FF5 + momentum, Newey-West (5 lags) t-stats; rolling 252-day betas every 5 days"
   },
   "comps": {
-    "V": {
-      "fiscal_year_end": "2025-09-30",
-      "market_cap": 674590065216.0,
-      "ev_ebitda": 27.07,
-      "pe": 33.63,
-      "fcf_yield": 0.032,
+    "UNH": {
+      "fiscal_year_end": "2025-12-31",
+      "market_cap": 329489116437.0,
+      "ev_ebitda": 16.18,
+      "pe": 27.33,
+      "fcf_yield": 0.0488,
       "gaps": null
     },
-    "MA": {
+    "ELV": {
       "fiscal_year_end": "2025-12-31",
-      "market_cap": 482361996115.0,
-      "ev_ebitda": 24.49,
-      "pe": 32.23,
-      "fcf_yield": 0.0356,
+      "market_cap": 84323117338.0,
+      "ev_ebitda": 12.2,
+      "pe": 14.89,
+      "fcf_yield": 0.0376,
       "gaps": null
     },
-    "AXP": {
+    "CI": {
       "fiscal_year_end": "2025-12-31",
-      "market_cap": 204728549716.0,
+      "market_cap": 71828491309.0,
       "ev_ebitda": null,
-      "pe": 18.9,
+      "pe": 12.06,
       "fcf_yield": null,
-      "gaps": "lender: EV/EBITDA and FCF yield not meaningful (debt and cash flows are operating items)"
+      "gaps": "capex not reported in XBRL; total debt not reported in XBRL"
     },
-    "PYPL": {
+    "HUM": {
       "fiscal_year_end": "2025-12-31",
-      "market_cap": 44937359711.0,
-      "ev_ebitda": 6.67,
-      "pe": 8.59,
-      "fcf_yield": 0.1238,
+      "market_cap": 45819043124.0,
+      "ev_ebitda": 15.87,
+      "pe": 38.57,
+      "fcf_yield": 0.0082,
       "gaps": null
     },
-    "COF": {
+    "CNC": {
       "fiscal_year_end": "2025-12-31",
-      "market_cap": 118448445000.0,
+      "market_cap": 30686969400.0,
       "ev_ebitda": null,
-      "pe": 48.29,
-      "fcf_yield": null,
-      "gaps": "lender: EV/EBITDA and FCF yield not meaningful (debt and cash flows are operating items)"
+      "pe": null,
+      "fcf_yield": 0.1408,
+      "gaps": "net loss: P/E not meaningful; negative EBITDA: EV/EBITDA not meaningful"
     },
-    "SYF": {
+    "MOH": {
       "fiscal_year_end": "2025-12-31",
-      "market_cap": 23091568515.0,
-      "ev_ebitda": null,
-      "pe": 6.5,
-      "fcf_yield": null,
-      "gaps": "lender: EV/EBITDA and FCF yield not meaningful (debt and cash flows are operating items)"
+      "market_cap": 9871020000.0,
+      "ev_ebitda": 9.62,
+      "pe": 20.91,
+      "fcf_yield": -0.0644,
+      "gaps": null
     },
-    "ALLY": {
+    "CVS": {
       "fiscal_year_end": "2025-12-31",
-      "market_cap": 11443992451.0,
+      "market_cap": 108815054789.0,
       "ev_ebitda": null,
-      "pe": 13.43,
-      "fcf_yield": null,
-      "gaps": "lender: EV/EBITDA and FCF yield not meaningful (debt and cash flows are operating items)"
+      "pe": 61.55,
+      "fcf_yield": 0.0717,
+      "gaps": "total debt not reported in XBRL"
     }
   },
   "valuation": {
-    "base_fcf": 21577000000.0,
+    "base_fcf": 16075000000.0,
     "base_fcf_source": "FY2025 operating cash flow - capex (SEC 10-K)",
-    "stage1_growth": 0.1291,
+    "stage1_growth": 0.1372,
     "stage1_growth_source": "median rolling 5y FCF CAGR, FY2010 onward",
     "wacc_inputs": {
       "risk_free": {
@@ -482,49 +502,49 @@
         "source": "FRED DGS10 on 2026-09-30"
       },
       "beta": {
-        "value": 0.7959,
-        "source": "5y daily V vs SPY returns to as-of (OLS slope)"
+        "value": 0.4067,
+        "source": "5y daily stock vs SPY returns to as-of (OLS slope)"
       },
       "equity_risk_premium": {
         "value": 0.0835,
         "source": "Ken French Mkt-RF, arithmetic mean 1926-07 to 202608, x12"
       },
       "cost_of_equity": {
-        "value": 0.1193,
+        "value": 0.0868,
         "source": "CAPM: rf + beta x ERP"
       },
       "pre_tax_cost_of_debt": {
-        "value": 0.0256,
+        "value": 0.0553,
         "source": "FY2025 interest expense / average total debt (SEC 10-K)"
       },
       "tax_rate": {
-        "value": 0.171,
+        "value": 0.1286,
         "source": "FY2025 income tax / pretax income (SEC 10-K)"
       },
       "equity_weight": {
-        "value": 0.964,
+        "value": 0.82,
         "source": "market cap (as-of price x Yahoo shares) / (market cap + book debt)"
       },
       "wacc": {
-        "value": 0.1158,
+        "value": 0.0799,
         "source": "we x ke + (1 - we) x kd x (1 - t)"
       }
     },
-    "price": 359.33,
-    "implied_value": 199.15,
-    "upside": -0.4458,
-    "reverse_dcf_stage1_growth": 0.2838,
+    "price": 367.08,
+    "implied_value": 526.64,
+    "upside": 0.4347,
+    "reverse_dcf_stage1_growth": 0.0602,
     "convention": "valuation date = as-of; FY+1 FCF discounted one full year (conservative)"
   },
   "risk": {
     "full": {
       "start": "2014-01-03",
-      "V": {
-        "ann_vol": 0.2396,
-        "beta_vs_spy": 1.0098,
-        "max_drawdown": -0.3636,
-        "var_95_1d": 0.0227,
-        "es_95_1d": 0.035
+      "UNH": {
+        "ann_vol": 0.2862,
+        "beta_vs_spy": 0.7809,
+        "max_drawdown": -0.6139,
+        "var_95_1d": 0.0233,
+        "es_95_1d": 0.0405
       },
       "SPY": {
         "ann_vol": 0.1712,
@@ -536,12 +556,12 @@
     },
     "trailing_3y": {
       "start": "2023-10-02",
-      "V": {
-        "ann_vol": 0.2025,
-        "beta_vs_spy": 0.6262,
-        "max_drawdown": -0.2038,
-        "var_95_1d": 0.0178,
-        "es_95_1d": 0.0292
+      "UNH": {
+        "ann_vol": 0.3679,
+        "beta_vs_spy": 0.2536,
+        "max_drawdown": -0.6139,
+        "var_95_1d": 0.0276,
+        "es_95_1d": 0.0583
       },
       "SPY": {
         "ann_vol": 0.1529,
@@ -555,30 +575,30 @@
   "backtest": {
     "oos_start": "2017-01-03",
     "oos_end": "2026-09-30",
-    "signal": "long V when close > SMA(window), else cash; signal acts next day; window re-picked each Jan 1 by best trailing-3y Sharpe",
+    "signal": "long the stock when close > SMA(window), else cash; signal acts next day; window re-picked each Jan 1 by best trailing-3y Sharpe",
     "windows_chosen": {
-      "2017": 50,
-      "2018": 50,
-      "2019": 50,
+      "2017": 150,
+      "2018": 150,
+      "2019": 200,
       "2020": 200,
-      "2021": 150,
-      "2022": 100,
+      "2021": 200,
+      "2022": 200,
       "2023": 200,
       "2024": 200,
-      "2025": 200,
-      "2026": 200
+      "2025": 150,
+      "2026": 50
     },
     "strategy": {
-      "cagr": 0.0021,
-      "ann_vol": 0.1746,
-      "sharpe_rf0": 0.1,
-      "max_drawdown": -0.5672
+      "cagr": 0.0402,
+      "ann_vol": 0.2283,
+      "sharpe_rf0": 0.291,
+      "max_drawdown": -0.533
     },
-    "buy_hold_V": {
-      "cagr": 0.1785,
-      "ann_vol": 0.2465,
-      "sharpe_rf0": 0.789,
-      "max_drawdown": -0.3636
+    "buy_hold": {
+      "cagr": 0.1075,
+      "ann_vol": 0.3054,
+      "sharpe_rf0": 0.491,
+      "max_drawdown": -0.6139
     },
     "SPY": {
       "cagr": 0.1525,
@@ -589,23 +609,66 @@
   },
   "scenarios": {
     "bear": {
-      "stage1_growth": 0.0995,
-      "wacc": 0.1208,
-      "target": 166.71,
-      "upside": -0.536
+      "stage1_growth": 0.076,
+      "wacc": 0.0849,
+      "target": 354.47,
+      "upside": -0.0343
     },
     "base": {
-      "stage1_growth": 0.1291,
-      "wacc": 0.1158,
-      "target": 199.15,
-      "upside": -0.4458
+      "stage1_growth": 0.1372,
+      "wacc": 0.0799,
+      "target": 526.64,
+      "upside": 0.4347
     },
     "bull": {
-      "stage1_growth": 0.1881,
-      "wacc": 0.1108,
-      "target": 267.85,
-      "upside": -0.2546
+      "stage1_growth": 0.1943,
+      "wacc": 0.0749,
+      "target": 764.68,
+      "upside": 1.0832
     },
-    "method": "stage-1 growth at the 25th/50th/75th percentile of V's rolling 5y FCF CAGRs; WACC +/-0.5pp"
+    "method": "stage-1 growth at the 25th/50th/75th percentile of the stock's rolling 5y FCF CAGRs; WACC +/-0.5pp"
+  },
+  "verdict": {
+    "base_upside_positive": true,
+    "all_scenarios_positive": false,
+    "supports_long": true,
+    "rule": "supports a long thesis if the base-case DCF value is above the as-of price; the bear case is reported alongside"
+  },
+  "comparison": {
+    "UNH": {
+      "price": 367.08,
+      "implied_value": 526.64,
+      "upside": 0.4347,
+      "bear": 354.47,
+      "base": 526.64,
+      "bull": 764.68,
+      "wacc": 0.0799,
+      "reverse_dcf_stage1_growth": 0.0602,
+      "sharpe_buy_hold": 0.491,
+      "sharpe_strategy": 0.291,
+      "supports_long": true
+    },
+    "COST": {
+      "price": 910.34,
+      "implied_value": 410.96,
+      "upside": -0.5486,
+      "bear": 284.63,
+      "base": 410.96,
+      "bull": 496.94,
+      "wacc": 0.1086,
+      "reverse_dcf_stage1_growth": 0.385,
+      "sharpe_buy_hold": 0.993,
+      "sharpe_strategy": 0.588,
+      "supports_long": false
+    }
+  },
+  "archived": {
+    "V": {
+      "reason": "Dropped after M3: the base DCF gave 199.15 vs a 359.33 price (-44.6%), even the bull case was -25.5%, and the price implied 28.4% stage-1 FCF growth vs a 12.9% historical median. Frank re-picked from the shortlist with the same methods and assumptions (no tuning).",
+      "summary_file": "results/archive/V_summary.json"
+    }
+  },
+  "compared_with": {
+    "COST": "results/compare/COST_summary.json"
   }
 }

@@ -35,6 +35,7 @@ def apply_theme() -> None:
 def save(fig, name: str) -> Path:
     FIG_DIR.mkdir(exist_ok=True)
     path = FIG_DIR / f"{name}.png"
+    path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path, bbox_inches="tight", metadata={"Software": None})
     plt.close(fig)
     return path
