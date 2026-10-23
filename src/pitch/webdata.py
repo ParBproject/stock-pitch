@@ -24,6 +24,39 @@ def _weekly(df):
     return df.groupby(df.index.to_period("W-FRI")).tail(1)
 
 
+def scenario_panel(summary: dict) -> dict:
+    """Precomputed DCF surface for the scenario panel. Every value comes from analysis.dcf_breakdown; the
+    browser only looks values up. Exact defaults (base growth, both beta-driven WACCs, scenario growths) are
+    inserted into the grids so the panel's defaults reproduce summary.json to the cent."""
+    v, sc, bs = summary["valuation"], summary["scenarios"], summary["beta_sensitivity"]
+    sp = a.scenario_params()  # exact values; summary.json stores them rounded
+    g0, w5 = sp["base"]
+    _, wf = a.full_sample_beta_wacc()
+    growth = sorted({round(x, 4) for x in np.arange(-0.05, 0.3001, 0.005)} | {sp[k][0] for k in sp})
+    wacc = sorted({round(x, 4) for x in np.arange(0.06, 0.1401, 0.0025)} | {w5, wf} | {sp[k][1] for k in sp})
+    values = [[round(a.dcf_breakdown(g, w)["per_share"], 2) for w in wacc] for g in growth]
+    paths = [[round(x / 1e9, 3) for x in a.dcf_breakdown(g, w5)["fcf_path"]] for g in growth]
+    base_year = int(a.fcf_history().index[-1].year)
+    return {
+        "growth": growth,
+        "wacc": wacc,
+        "values": values,
+        "fcf_paths_bn": paths,
+        "fcf0_bn": round(a.dcf_inputs()["fcf0"] / 1e9, 3),
+        "years": [base_year + i for i in range(1, a.ASSUMPTIONS["fade_years"]["value"] + 1)],
+        "price": v["price"],
+        "defaults": {
+            "growth": g0,
+            "beta": {
+                "5y": {"beta": v["wacc_inputs"]["beta"]["value"], "wacc": w5, "label": "5-year beta"},
+                "full": {"beta": bs["beta"], "wacc": wf, "label": "Full-sample beta (2014 on)"},
+            },
+        },
+        "scenarios": {k: {"growth": sp[k][0], "wacc": sp[k][1], "target": sc[k]["target"]} for k in ("bear", "base", "bull")},
+        "terminal_growth": a.ASSUMPTIONS["terminal_growth"]["value"],
+    }
+
+
 def build() -> dict:
     a.set_pitch(ACTIVE)
     summary = json.loads((ROOT / "results" / "summary.json").read_text())
@@ -43,6 +76,7 @@ def build() -> dict:
         "backtest_weekly": {c: _series(cw[c], 4) for c in cw.columns},
         "fcf_history": _series(fcf, 0),
         "dcf_grid": {"growth": GROWTH_GRID, "wacc": WACC_GRID, "values": grid},
+        "scenario_panel": scenario_panel(summary),
         "notes": {
             "prices": "Yahoo Finance adjusted close, last trading day of each week (real dates)",
             "dcf_grid": "same two-stage DCF as notebook 04; only stage-1 growth and WACC vary",

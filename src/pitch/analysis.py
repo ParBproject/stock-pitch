@@ -199,14 +199,19 @@ def business_snapshot(years: int = 5) -> dict:
     return out
 
 
-def beta_sensitivity() -> dict:
-    """Re-run the base DCF with the full-sample (2014 to as-of) beta instead of the 5y beta. Nothing else changes."""
+def full_sample_beta_wacc() -> tuple[float, float]:
+    """Exact full-sample beta (2014 to as-of, vs SPY) and the WACC it implies with every other input unchanged."""
     w = wacc_inputs()
     rets = load_returns()[[_t(), BENCHMARK]].loc[:AS_OF].dropna()
     beta = rets.cov().iloc[0, 1] / rets[BENCHMARK].var()
     ke = w["risk_free"]["value"] + beta * w["equity_risk_premium"]["value"]
     we = w["equity_weight"]["value"]
-    wacc = we * ke + (1 - we) * w["pre_tax_cost_of_debt"]["value"] * (1 - w["tax_rate"]["value"])
+    return float(beta), float(we * ke + (1 - we) * w["pre_tax_cost_of_debt"]["value"] * (1 - w["tax_rate"]["value"]))
+
+
+def beta_sensitivity() -> dict:
+    """Re-run the base DCF with the full-sample (2014 to as-of) beta instead of the 5y beta. Nothing else changes."""
+    beta, wacc = full_sample_beta_wacc()
     v = dcf_value(stage1_growth(), wacc)
     price = price_at_asof(_t())
     return {
@@ -273,20 +278,43 @@ def stage1_growth() -> float:
     return float(cagr.dropna().median())
 
 
-def dcf_value(g1: float, wacc: float, gt: float | None = None) -> float:
+def dcf_inputs() -> dict:
+    """Base FCF, net debt items and share count for the active pitch (read once per pitch)."""
+    key = _t()
+    if key not in _DCF_CACHE:
+        fy = fy_table(key)
+        last = fy.index.max()
+        _DCF_CACHE[key] = {
+            "fcf0": float(fcf_history().iloc[-1]),
+            "debt": float(total_debt(key, last)),
+            "cash": float(fy.loc[last, "cash"]),
+            "shares": float(shares().loc[key, "shares_outstanding"]),
+        }
+    return _DCF_CACHE[key]
+
+
+_DCF_CACHE: dict[str, dict] = {}
+
+
+def dcf_breakdown(g1: float, wacc: float, gt: float | None = None) -> dict:
+    """Two-stage FCF DCF. Returns the projected FCF path, PVs, equity value and value per share."""
     gt = ASSUMPTIONS["terminal_growth"]["value"] if gt is None else gt
     n = ASSUMPTIONS["fade_years"]["value"]
-    fy = fy_table(_t())
-    last = fy.index.max()
-    fcf = fcf_history().iloc[-1]
-    pv = 0.0
+    inp = dcf_inputs()
+    fcf = inp["fcf0"]
+    path, pv = [], 0.0
     for t in range(1, n + 1):
         g = g1 + (gt - g1) * (t - 1) / (n - 1)
         fcf *= 1 + g
+        path.append(fcf)
         pv += fcf / (1 + wacc) ** t
-    pv += fcf * (1 + gt) / (wacc - gt) / (1 + wacc) ** n
-    equity = pv - total_debt(_t(), last) + fy.loc[last, "cash"]
-    return equity / shares().loc[_t(), "shares_outstanding"]
+    pv_tv = fcf * (1 + gt) / (wacc - gt) / (1 + wacc) ** n
+    equity = pv + pv_tv - inp["debt"] + inp["cash"]
+    return {"fcf_path": path, "pv_fcf": pv, "pv_terminal": pv_tv, "equity": equity, "per_share": equity / inp["shares"]}
+
+
+def dcf_value(g1: float, wacc: float, gt: float | None = None) -> float:
+    return dcf_breakdown(g1, wacc, gt)["per_share"]
 
 
 def dcf() -> dict:
@@ -382,18 +410,21 @@ def backtest() -> tuple[dict, pd.DataFrame]:
 
 
 # ---------- 06 scenarios ----------
-def scenarios() -> dict:
-    d = dcf()
-    wacc = d["wacc_inputs"]["wacc"]["value"]
+def scenario_params() -> dict:
+    """Exact (unrounded) stage-1 growth and WACC for bear/base/bull."""
+    wacc = dcf()["wacc_inputs"]["wacc"]["value"]
     shift = ASSUMPTIONS["scenario_wacc_shift"]["value"]
     s = fcf_history()
     s = s[s.index >= "2010-01-01"]
     cagr = ((s / s.shift(5)) ** (1 / 5) - 1).dropna()
-    price = d["price"]
+    return {name: (float(cagr.quantile(q)), wacc + dw) for name, q, dw in (("bear", 0.25, shift), ("base", 0.5, 0.0), ("bull", 0.75, -shift))}
+
+
+def scenarios() -> dict:
+    price = dcf()["price"]
     out = {}
-    for name, q, dw in (("bear", 0.25, shift), ("base", 0.5, 0.0), ("bull", 0.75, -shift)):
-        g = float(cagr.quantile(q))
-        v = dcf_value(g, wacc + dw)
-        out[name] = {"stage1_growth": r(g), "wacc": r(wacc + dw), "target": r(v, 2), "upside": r(v / price - 1)}
+    for name, (g, w) in scenario_params().items():
+        v = dcf_value(g, w)
+        out[name] = {"stage1_growth": r(g), "wacc": r(w), "target": r(v, 2), "upside": r(v / price - 1)}
     out["method"] = "stage-1 growth at the 25th/50th/75th percentile of the stock's rolling 5y FCF CAGRs; WACC +/-0.5pp"
     return out
