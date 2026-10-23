@@ -81,3 +81,62 @@ def render_m3(files: dict) -> str:
         lines += _pitch_bullets(files[info["summary_file"]])
     lines.append(M3_END)
     return "\n".join(lines)
+
+
+PITCH_START = "<!-- pitch:start -->"
+PITCH_END = "<!-- pitch:end -->"
+
+
+def _bn(x: float) -> str:
+    return f"${x / 1e9:.1f}B"
+
+
+def render_pitch(s: dict) -> str:
+    """Headline numbers and honest risks for the employer-facing README, all from results/summary.json."""
+    v, sc, bt, bs, fm = s["valuation"], s["scenarios"], s["backtest"], s["beta_sensitivity"], s["factor_model"]
+    w = v["wacc_inputs"]
+    t = s["ticker"]
+    years = sorted(s["business"])
+    peak = max(years, key=lambda y: s["business"][y]["fcf"])
+    last = years[-1]
+    rk = s["risk"]["full"]
+    rec = "Long" if s["verdict"]["supports_long"] else "No position"
+    lines = [
+        PITCH_START,
+        f"**{rec} {t}** at an as-of price of **${v['price']:.2f}** ({s['as_of']}). "
+        f"Base-case DCF value **${v['implied_value']:.2f}** ({_pct(v['upside'])} upside); "
+        f"target range ${sc['bear']['target']:.2f} to ${sc['bull']['target']:.2f}.",
+        "",
+        "| | Bear | Base | Bull |",
+        "|---|---|---|---|",
+        f"| Stage-1 FCF growth | {_pct(sc['bear']['stage1_growth'])} | {_pct(sc['base']['stage1_growth'])} | {_pct(sc['bull']['stage1_growth'])} |",
+        f"| WACC | {sc['bear']['wacc'] * 100:.2f}% | {sc['base']['wacc'] * 100:.2f}% | {sc['bull']['wacc'] * 100:.2f}% |",
+        f"| Value per share | ${sc['bear']['target']:.2f} | ${sc['base']['target']:.2f} | ${sc['bull']['target']:.2f} |",
+        f"| vs price | {_pct(sc['bear']['upside'])} | {_pct(sc['base']['upside'])} | {_pct(sc['bull']['upside'])} |",
+        "",
+        f"- **What the price implies:** a reverse DCF says the market prices in {_pct(v['reverse_dcf_stage1_growth'])} stage-1 FCF growth, "
+        f"against {_pct(v['stage1_growth'])} in the base case (the median of the stock's rolling 5-year FCF CAGRs).",
+        f"- **Discount rate:** CAPM with rf {_pct(w['risk_free']['value'])}, 5-year beta {w['beta']['value']:.2f}, "
+        f"ERP {_pct(w['equity_risk_premium']['value'])}, giving WACC {w['wacc']['value'] * 100:.2f}%. "
+        f"Terminal growth {_pct(s['assumptions']['terminal_growth']['value'])}, {s['assumptions']['fade_years']['value']}-year fade.",
+        f"- **Backtest** ({bt['oos_start']} to {bt['oos_end']}, walk-forward, out-of-sample, net of "
+        f"{s['assumptions']['trading_cost_bps']['value']} bp costs), Sharpe with rf = 0: trend signal {bt['strategy']['sharpe_rf0']:.2f}, "
+        f"buy-and-hold {bt['buy_hold']['sharpe_rf0']:.2f}, {s['benchmark']} {bt['SPY']['sharpe_rf0']:.2f}.",
+        "",
+        "### Honest risks",
+        "",
+        f"- **The call depends on beta.** The 5-year beta of {w['beta']['value']:.2f} gives WACC {w['wacc']['value'] * 100:.2f}% and "
+        f"${v['implied_value']:.2f}. The full-sample beta ({bs['beta']:.2f}) gives WACC {bs['wacc'] * 100:.2f}% and "
+        f"**${bs['implied_value']:.2f} ({_pct(bs['upside'])})**, below the price. The low recent beta reflects a period when "
+        f"{t}'s own news dominated its returns (factor-model R² {fm['r_squared']:.2f}).",
+        f"- **The bear case is below the price** (${sc['bear']['target']:.2f}, {_pct(sc['bear']['upside'])}): this is a long with "
+        "downside, not a margin of safety in every scenario.",
+        f"- **FCF is falling:** {_bn(s['business'][peak]['fcf'])} in FY{peak[:4]} to {_bn(s['business'][last]['fcf'])} in FY{last[:4]}, "
+        "while base-case growth uses the long-run median.",
+        f"- **Margins:** operating margin {_pct(s['business'][last]['operating_margin'])} in FY{last[:4]} vs "
+        f"{_pct(s['business'][peak]['operating_margin'])} in FY{peak[:4]}. The upside needs a recovery that is not yet in the numbers.",
+        f"- **Risk and signals trail the market:** max drawdown {_pct(rk[t]['max_drawdown'])} vs {_pct(rk['SPY']['max_drawdown'])} for "
+        f"{s['benchmark']} since {s['risk']['full']['start']}; both the trend signal and buy-and-hold trail {s['benchmark']} on Sharpe.",
+        PITCH_END,
+    ]
+    return "\n".join(lines)
