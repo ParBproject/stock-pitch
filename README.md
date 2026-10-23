@@ -30,13 +30,23 @@ Scores and method live in [`results/screen.json`](results/screen.json); this tab
 it by `scripts/build_screen.py`, and `tests/` checks they match. Snapshot sources and SHA-256 hashes are
 in [`data/manifest.json`](data/manifest.json).
 
+## M2: data and repo skeleton
+
+All snapshots for **V** are frozen as of **2026-09-30** in [`data/raw/`](data/raw), with sources and SHA-256 hashes in [`data/raw/manifest.json`](data/raw/manifest.json):
+
+- **Prices:** daily adjusted close and volume from Yahoo Finance for V, peers MA, AXP, PYPL, COF, SYF and ALLY, and benchmark SPY, from 2014.
+- **Factors:** Ken French Fama/French 5 factors and momentum, daily. The latest library release ends **2026-08-31**, a month before the as-of date.
+- **Fundamentals:** SEC EDGAR XBRL 10-K annual facts, kept only if filed on or before the as-of date. Each value is the figure as first reported, with the filing accession number. V's fiscal 2026 10-K is filed after the as-of date, so FY2025 is the latest year.
+- **Known gaps:** XBRL has no unsegmented diluted EPS or diluted share count for V, which reports by share class. ALLY, COF and SYF don't report operating income, and SYF has no revenue line. These gaps are listed in `results/summary.json` and are never filled with estimates.
+
+`src/pitch/data.py` provides offline loaders that check the hashes. `results/summary.json` holds the data coverage now. Its analysis fields stay `null` until M3 computes them. `make all` rebuilds the screen, the summary and the notebooks, then runs lint and tests offline. `make data` re-fetches the data, which needs a network connection.
+
 ## Reproduce
 
 ```bash
 pip install -e ".[dev]"
-python scripts/build_screen.py      # offline, from data/snapshots
-pytest && ruff check .
-python scripts/fetch_data.py        # optional: re-fetch snapshots (network; changes results)
+make all     # offline: screen, summary, notebooks, ruff, pytest
+make data    # optional: re-fetch snapshots (network; changes results)
 ```
 
 Not investment advice. Educational portfolio project.
