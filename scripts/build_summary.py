@@ -3,7 +3,7 @@
 import json
 
 from pitch.data import ROOT, verify_manifest
-from pitch.readme import M3_END, M3_START, render_m3
+from pitch.readme import M3_END, M3_START, PITCH_END, PITCH_START, render_m3, render_pitch
 from pitch.summary import build_all
 from pitch.universe import PITCHES
 
@@ -18,7 +18,9 @@ def main() -> None:
         path.write_text(json.dumps(content, indent=2) + "\n")
     readme = ROOT / "README.md"
     head, rest = readme.read_text().split(M3_START, 1)
-    readme.write_text(head + render_m3(files) + rest.split(M3_END, 1)[1])
+    text = head + render_m3(files) + rest.split(M3_END, 1)[1]
+    head, rest = text.split(PITCH_START, 1)
+    readme.write_text(head + render_pitch(files["results/summary.json"]) + rest.split(PITCH_END, 1)[1])
     print("wrote", ", ".join(files))
 
 

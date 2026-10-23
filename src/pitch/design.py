@@ -70,7 +70,7 @@ h1{font-size:var(--fs-6);font-weight:var(--fw-bold)}h2{font-size:var(--fs-5);fon
 .num,.n{font-family:var(--font-mono);font-variant-numeric:tabular-nums;color:var(--c-fg-strong);font-weight:var(--fw-medium)}
 .na{color:var(--c-muted)}
 code{font-family:var(--font-mono);color:var(--c-accent-strong);font-size:.92em}
-.grid{display:grid;grid-template-columns:repeat(var(--grid-cols),1fr);column-gap:var(--grid-gutter);row-gap:var(--sp-3)}
+.grid{display:grid;grid-template-columns:repeat(var(--grid-cols),minmax(0,1fr));column-gap:var(--grid-gutter);row-gap:var(--sp-3)}
 .span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-5{grid-column:span 5}.span-6{grid-column:span 6}.span-7{grid-column:span 7}
 .span-8{grid-column:span 8}.span-12{grid-column:1/-1}
 .card{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:var(--sp-4)}
@@ -159,17 +159,18 @@ def style_guide_html() -> str:
 <link rel="stylesheet" href="assets/tokens.css"><link rel="stylesheet" href="assets/components.css">
 <style>
 body{{max-width:1200px;margin:0 auto;padding:var(--sp-7) var(--sp-5)}}section{{margin:0 0 var(--sp-8)}}h2{{margin:var(--sp-1) 0 var(--sp-4)}}
-.sws{{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--sp-2)}}.sw{{padding:var(--sp-2)}}.sw b{{display:block;font-size:var(--fs-2)}}
+.sws{{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:var(--sp-2)}}.sw{{padding:var(--sp-2)}}.sw b{{display:block;font-size:var(--fs-2)}}
 .sw span{{font-size:var(--fs-1);color:var(--c-muted)}}.chip{{height:48px;border-radius:var(--r-sm);border:1px solid var(--c-line);margin-bottom:var(--sp-2)}}
 .ts{{display:flex;gap:var(--sp-4);align-items:baseline;padding:var(--sp-2) 0;border-bottom:1px solid var(--c-line)}}.ts .num{{width:56px;font-size:var(--fs-1)}}
 .col{{background:var(--c-accent-tint);color:var(--c-accent-strong);text-align:center;padding:var(--sp-2) 0;border-radius:var(--r-sm);font-size:var(--fs-1)}}
 .span-1{{grid-column:span 1}}.sp{{display:flex;align-items:center;gap:var(--sp-3);margin:var(--sp-1) 0}}.sp div{{height:16px;background:var(--c-accent);border-radius:2px}}
 .row{{display:flex;gap:var(--sp-3);align-items:center;flex-wrap:wrap}}
-</style></head><body>
+main{{display:block;max-width:100%}}@media (max-width:600px){{.grid{{column-gap:4px}}.grid>.stat,.grid>.card{{grid-column:1/-1}}}}table{{display:block;overflow-x:auto;max-width:100%}}
+</style></head><body><main>
 <div class="kicker">stock-pitch</div><h1>Design system</h1>
 <p class="muted">Generated from <code>design/tokens.json</code>. The deck, the figures and this page all use the same tokens.</p>
 <section><div class="kicker">Color</div><h2>Palette</h2><div class="sws">{sw}</div></section>
-<section><div class="kicker">Accessibility</div><h2>WCAG AA contrast</h2><table class="sm"><thead><tr><th>Pair</th><th>Ratio</th><th>Required</th><th></th></tr></thead><tbody>{rows}</tbody></table>
+<section><div class="kicker">Accessibility</div><h2>WCAG AA contrast</h2><table class="sm" tabindex="0" aria-label="Contrast checks"><thead><tr><th>Pair</th><th>Ratio</th><th>Required</th><th>Result</th></tr></thead><tbody>{rows}</tbody></table>
 <p class="note">Text pairs need at least 4.5:1 (AA, normal text). UI boundaries need at least 3:1. The pytest suite checks these.</p></section>
 <section><div class="kicker">Type</div><h2>{t["font"]["sans"]}, with {t["font"]["mono"]} for numbers</h2>{scale}
 <p>Tabular numbers: <span class="num">{base} · {up} · {beta}</span> line up in columns.</p></section>
@@ -186,7 +187,7 @@ body{{max-width:1200px;margin:0 auto;padding:var(--sp-7) var(--sp-5)}}section{{m
 <section><div class="kicker">Motion</div><h2>{m["fast"]} to {m["slow"]} ms, with reduced motion respected</h2>
 <p class="muted">Hover the stat cards or buttons. Slides fade in over {m["slow"]} ms. Under <code>prefers-reduced-motion: reduce</code>, every duration becomes 0.</p></section>
 <section><div class="kicker">Charts</div><h2>Chart theme</h2><img class="fig" src="assets/06_scenarios.png" alt="Scenario chart in the chart theme"></section>
-</body></html>
+</main></body></html>
 """
 
 
