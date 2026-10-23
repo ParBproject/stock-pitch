@@ -1,4 +1,5 @@
 import { pct, spct, usd, bn, mult, n2, hero } from "./fmt.js";
+import { initPanel } from "./panel.js";
 import "./app.css";
 
 let echartsP = null;
@@ -74,6 +75,9 @@ const peakFcfYear = years.reduce((a, b) => (S.business[b].fcf > S.business[a].fc
     el("hero-note").innerHTML = H.note;
   }
 }
+
+// ---------- M7 scenario panel ----------
+window.__panel = initPanel({ D, el, mount, base, axis, T, tok, reduced });
 
 // ---------- linked state ----------
 const state = { peers: new Set(["SPY"]), metric: "pe", focus: t };
