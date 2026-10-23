@@ -63,19 +63,19 @@ def fetch_french() -> None:
         parse_french(text).to_csv(RAW / out)
 
 
-def fetch_fundamentals() -> None:
+def fetch_fundamentals(concepts: dict = CONCEPTS, instant: set = INSTANT_METRICS, out: str = "fundamentals_annual.csv") -> None:
     hdr = {"User-Agent": SEC_USER_AGENT}
     rows = []
     for t, cik in CIKS.items():
         facts = requests.get(f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json", headers=hdr, timeout=60).json()
         gaap = facts["facts"].get("us-gaap", {})
-        for metric, names in CONCEPTS.items():
+        for metric, names in concepts.items():
             for priority, name in enumerate(names):
                 for unit, items in gaap.get(name, {}).get("units", {}).items():
                     for f in items:
                         if f.get("form") != "10-K" or f["end"] > AS_OF or f["filed"] > AS_OF:
                             continue
-                        if metric not in INSTANT_METRICS:
+                        if metric not in instant:
                             if not f.get("start") or (pd.Timestamp(f["end"]) - pd.Timestamp(f["start"])).days < 350:
                                 continue
                         rows.append(
@@ -95,7 +95,7 @@ def fetch_fundamentals() -> None:
     # As originally reported: earliest filing per (ticker, metric, period_end), then best-priority concept.
     df = df.sort_values(["ticker", "metric", "period_end", "priority", "filed"])
     df = df.drop_duplicates(["ticker", "metric", "period_end"], keep="first").drop(columns="priority")
-    df.to_csv(RAW / "fundamentals_annual.csv", index=False)
+    df.to_csv(RAW / out, index=False)
 
 
 def main() -> None:
