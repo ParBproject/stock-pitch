@@ -347,9 +347,265 @@
       }
     }
   },
-  "factor_model": null,
-  "comps": null,
-  "valuation": null,
-  "risk": null,
-  "backtest": null
+  "assumptions": {
+    "terminal_growth": {
+      "value": 0.03,
+      "source": "Assumption: roughly long-run nominal US GDP growth; kept below the 10y yield"
+    },
+    "fade_years": {
+      "value": 10,
+      "source": "Assumption: growth fades linearly from stage-1 to terminal over 10 years"
+    },
+    "scenario_wacc_shift": {
+      "value": 0.005,
+      "source": "Assumption: +/-0.5pp WACC in bear/bull"
+    },
+    "trading_cost_bps": {
+      "value": 10,
+      "source": "Assumption: 10 bp per one-way switch (commission plus spread for a mega-cap)"
+    },
+    "sma_grid": {
+      "value": [
+        50,
+        100,
+        150,
+        200
+      ],
+      "source": "Assumption: candidate trend-filter windows (trading days)"
+    },
+    "train_years": {
+      "value": 3,
+      "source": "Assumption: walk-forward training window"
+    },
+    "cash_return": {
+      "value": 0.0,
+      "source": "Assumption: cash earns 0 in the backtest (conservative for the strategy)"
+    },
+    "beta_window_years": {
+      "value": 5,
+      "source": "Convention: 5y of daily returns for the CAPM beta"
+    }
+  },
+  "factor_model": {
+    "window": {
+      "start": "2014-01-03",
+      "end": "2026-08-31",
+      "n_days": 3183
+    },
+    "betas": {
+      "Mkt-RF": 1.0083,
+      "SMB": -0.1963,
+      "HML": 0.0893,
+      "RMW": 0.2192,
+      "CMA": -0.1278,
+      "Mom": -0.0383
+    },
+    "t_stats": {
+      "Mkt-RF": 40.58,
+      "SMB": -4.89,
+      "HML": 1.92,
+      "RMW": 4.0,
+      "CMA": -1.73,
+      "Mom": -1.22
+    },
+    "alpha_annual": 0.0354,
+    "alpha_t": 0.83,
+    "r_squared": 0.5315,
+    "method": "OLS of daily V excess return on FF5 + momentum, Newey-West (5 lags) t-stats; rolling 252-day betas every 5 days"
+  },
+  "comps": {
+    "V": {
+      "fiscal_year_end": "2025-09-30",
+      "market_cap": 674590065216.0,
+      "ev_ebitda": 27.07,
+      "pe": 33.63,
+      "fcf_yield": 0.032,
+      "gaps": null
+    },
+    "MA": {
+      "fiscal_year_end": "2025-12-31",
+      "market_cap": 482361996115.0,
+      "ev_ebitda": 24.49,
+      "pe": 32.23,
+      "fcf_yield": 0.0356,
+      "gaps": null
+    },
+    "AXP": {
+      "fiscal_year_end": "2025-12-31",
+      "market_cap": 204728549716.0,
+      "ev_ebitda": null,
+      "pe": 18.9,
+      "fcf_yield": null,
+      "gaps": "lender: EV/EBITDA and FCF yield not meaningful (debt and cash flows are operating items)"
+    },
+    "PYPL": {
+      "fiscal_year_end": "2025-12-31",
+      "market_cap": 44937359711.0,
+      "ev_ebitda": 6.67,
+      "pe": 8.59,
+      "fcf_yield": 0.1238,
+      "gaps": null
+    },
+    "COF": {
+      "fiscal_year_end": "2025-12-31",
+      "market_cap": 118448445000.0,
+      "ev_ebitda": null,
+      "pe": 48.29,
+      "fcf_yield": null,
+      "gaps": "lender: EV/EBITDA and FCF yield not meaningful (debt and cash flows are operating items)"
+    },
+    "SYF": {
+      "fiscal_year_end": "2025-12-31",
+      "market_cap": 23091568515.0,
+      "ev_ebitda": null,
+      "pe": 6.5,
+      "fcf_yield": null,
+      "gaps": "lender: EV/EBITDA and FCF yield not meaningful (debt and cash flows are operating items)"
+    },
+    "ALLY": {
+      "fiscal_year_end": "2025-12-31",
+      "market_cap": 11443992451.0,
+      "ev_ebitda": null,
+      "pe": 13.43,
+      "fcf_yield": null,
+      "gaps": "lender: EV/EBITDA and FCF yield not meaningful (debt and cash flows are operating items)"
+    }
+  },
+  "valuation": {
+    "base_fcf": 21577000000.0,
+    "base_fcf_source": "FY2025 operating cash flow - capex (SEC 10-K)",
+    "stage1_growth": 0.1291,
+    "stage1_growth_source": "median rolling 5y FCF CAGR, FY2010 onward",
+    "wacc_inputs": {
+      "risk_free": {
+        "value": 0.0529,
+        "source": "FRED DGS10 on 2026-09-30"
+      },
+      "beta": {
+        "value": 0.7959,
+        "source": "5y daily V vs SPY returns to as-of (OLS slope)"
+      },
+      "equity_risk_premium": {
+        "value": 0.0835,
+        "source": "Ken French Mkt-RF, arithmetic mean 1926-07 to 202608, x12"
+      },
+      "cost_of_equity": {
+        "value": 0.1193,
+        "source": "CAPM: rf + beta x ERP"
+      },
+      "pre_tax_cost_of_debt": {
+        "value": 0.0256,
+        "source": "FY2025 interest expense / average total debt (SEC 10-K)"
+      },
+      "tax_rate": {
+        "value": 0.171,
+        "source": "FY2025 income tax / pretax income (SEC 10-K)"
+      },
+      "equity_weight": {
+        "value": 0.964,
+        "source": "market cap (as-of price x Yahoo shares) / (market cap + book debt)"
+      },
+      "wacc": {
+        "value": 0.1158,
+        "source": "we x ke + (1 - we) x kd x (1 - t)"
+      }
+    },
+    "price": 359.33,
+    "implied_value": 199.15,
+    "upside": -0.4458,
+    "reverse_dcf_stage1_growth": 0.2838,
+    "convention": "valuation date = as-of; FY+1 FCF discounted one full year (conservative)"
+  },
+  "risk": {
+    "full": {
+      "start": "2014-01-03",
+      "V": {
+        "ann_vol": 0.2396,
+        "beta_vs_spy": 1.0098,
+        "max_drawdown": -0.3636,
+        "var_95_1d": 0.0227,
+        "es_95_1d": 0.035
+      },
+      "SPY": {
+        "ann_vol": 0.1712,
+        "beta_vs_spy": 1.0,
+        "max_drawdown": -0.3372,
+        "var_95_1d": 0.0162,
+        "es_95_1d": 0.0259
+      }
+    },
+    "trailing_3y": {
+      "start": "2023-10-02",
+      "V": {
+        "ann_vol": 0.2025,
+        "beta_vs_spy": 0.6262,
+        "max_drawdown": -0.2038,
+        "var_95_1d": 0.0178,
+        "es_95_1d": 0.0292
+      },
+      "SPY": {
+        "ann_vol": 0.1529,
+        "beta_vs_spy": 1.0,
+        "max_drawdown": -0.1876,
+        "var_95_1d": 0.0142,
+        "es_95_1d": 0.0213
+      }
+    }
+  },
+  "backtest": {
+    "oos_start": "2017-01-03",
+    "oos_end": "2026-09-30",
+    "signal": "long V when close > SMA(window), else cash; signal acts next day; window re-picked each Jan 1 by best trailing-3y Sharpe",
+    "windows_chosen": {
+      "2017": 50,
+      "2018": 50,
+      "2019": 50,
+      "2020": 200,
+      "2021": 150,
+      "2022": 100,
+      "2023": 200,
+      "2024": 200,
+      "2025": 200,
+      "2026": 200
+    },
+    "strategy": {
+      "cagr": 0.0021,
+      "ann_vol": 0.1746,
+      "sharpe_rf0": 0.1,
+      "max_drawdown": -0.5672
+    },
+    "buy_hold_V": {
+      "cagr": 0.1785,
+      "ann_vol": 0.2465,
+      "sharpe_rf0": 0.789,
+      "max_drawdown": -0.3636
+    },
+    "SPY": {
+      "cagr": 0.1525,
+      "ann_vol": 0.1813,
+      "sharpe_rf0": 0.874,
+      "max_drawdown": -0.3372
+    }
+  },
+  "scenarios": {
+    "bear": {
+      "stage1_growth": 0.0995,
+      "wacc": 0.1208,
+      "target": 166.71,
+      "upside": -0.536
+    },
+    "base": {
+      "stage1_growth": 0.1291,
+      "wacc": 0.1158,
+      "target": 199.15,
+      "upside": -0.4458
+    },
+    "bull": {
+      "stage1_growth": 0.1881,
+      "wacc": 0.1108,
+      "target": 267.85,
+      "upside": -0.2546
+    },
+    "method": "stage-1 growth at the 25th/50th/75th percentile of V's rolling 5y FCF CAGRs; WACC +/-0.5pp"
+  }
 }

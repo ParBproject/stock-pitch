@@ -66,5 +66,3 @@ def test_summary_reproducible_and_pinned():
     assert SUMMARY["data"]["prices"]["V"] == {"first": "2014-01-02", "last": "2026-09-30", "n_days": 3205}
     assert SUMMARY["data"]["factors"]["last"] == "2026-08-31"
     assert SUMMARY["data"]["fundamentals_fy"]["V"]["revenue"]["n_years"] == 19
-    for key in ("factor_model", "comps", "valuation", "risk", "backtest"):
-        assert SUMMARY[key] is None

@@ -4,12 +4,13 @@ export PYTHONPATH := src
 .PHONY: all data screen summary notebooks lint test clean
 
 ## Offline: rebuild everything from the frozen snapshots, then lint and test.
-all: screen summary notebooks lint test
+all: screen notebooks summary lint test
 
 ## Online: re-fetch snapshots. This changes data and results, so review the diff.
 data:
 	$(PY) scripts/fetch_data.py
 	$(PY) scripts/fetch_m2.py
+	PYTHONPATH=src:scripts $(PY) scripts/fetch_m3.py
 
 screen:
 	$(PY) scripts/build_screen.py

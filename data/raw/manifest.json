@@ -6,14 +6,22 @@
     "volume.csv": "Yahoo Finance via yfinance, daily share volume",
     "ff5_daily.csv": "Kenneth R. French Data Library, Fama/French 5 factors (2x3) daily, percent",
     "mom_daily.csv": "Kenneth R. French Data Library, momentum factor daily, percent",
-    "fundamentals_annual.csv": "SEC EDGAR XBRL companyfacts, 10-K annual facts filed on/before as_of"
+    "fundamentals_annual.csv": "SEC EDGAR XBRL companyfacts, 10-K annual facts filed on/before as_of",
+    "fundamentals_extra.csv": "SEC EDGAR XBRL companyfacts, extra 10-K facts filed on/before as_of",
+    "shares_outstanding.csv": "Yahoo Finance via yfinance get_shares_full, last count on/before as_of",
+    "dgs10_daily.csv": "FRED DGS10, 10-year Treasury constant-maturity yield, percent",
+    "ff3_monthly.csv": "Kenneth R. French Data Library, Fama/French 3 factors monthly since 1926-07, percent"
   },
   "yfinance_version": "1.7.0",
   "sha256": {
+    "dgs10_daily.csv": "22e85800d089df57cbbf5268716db1a7a42001da84079d6a7bd9f1e7420302e7",
+    "ff3_monthly.csv": "017d5b7f4fe90d32749a8cd46cef18c8652077f980be8e15385d47790feac1f5",
     "ff5_daily.csv": "90cd36f0319fedf0546fefd9290bd5178b7ddbbfcabea2870c224d6d491e9347",
     "fundamentals_annual.csv": "69ed3ffd7024fa65a851d77159708395f1407e9d0f1c464903edecd02d867890",
+    "fundamentals_extra.csv": "68e21e735c7ce2805d12e0aa644f44213650c6c42bd72c911d3198f29c3f2ffb",
     "mom_daily.csv": "b71c3cadcfd97d5e752717adb9e3fec8dd6c03dab01d504d373189e05aed7911",
     "prices_adj_close.csv": "cd513bc9d934ac68eb4912be0c0e2f5851a579adc392f1d1f3f945db5aa7fcd1",
+    "shares_outstanding.csv": "c16da74b0dae64a75842ba8d6c224579997859f5c0d0c86305509e8e3ed4b0de",
     "volume.csv": "1e6442b4ff4a495c4ee9705bcf178e5a6a1fb6a1d1ba64c96940c03cd69ff78a"
   }
 }
