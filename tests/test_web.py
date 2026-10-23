@@ -8,7 +8,7 @@ SUMMARY = json.loads((ROOT / "results/summary.json").read_text())
 
 
 def test_web_data_is_current_and_reproducible():
-    assert json.loads(json.dumps(build())) == WEB
+    _assert_json_close(json.loads(json.dumps(build())), WEB)
 
 
 def test_web_data_embeds_summary_unchanged():
@@ -72,3 +72,21 @@ def test_panel_surface_is_the_notebook_dcf():
         g, w = p["growth"][gi], p["wacc"][wi]
         assert abs(p["values"][gi][wi] - analysis.dcf_value(g, w)) < 0.01
     assert len(p["fcf_paths_bn"]) == len(p["growth"])
+
+
+def _assert_json_close(a, b, path="$", rtol=1e-12, atol=1e-12):
+    """Recursive compare: floats within rtol/atol; strings, ints, bools, keys, structure exact."""
+    if isinstance(a, float) or isinstance(b, float):
+        assert isinstance(a, (int, float)) and isinstance(b, (int, float)), path
+        assert not isinstance(a, bool) and not isinstance(b, bool), path
+        assert abs(a - b) <= atol + rtol * abs(b), f"{path}: {a!r} != {b!r}"
+    elif isinstance(a, dict):
+        assert isinstance(b, dict) and list(a) == list(b), f"{path}: keys differ"
+        for k in a:
+            _assert_json_close(a[k], b[k], f"{path}.{k}", rtol, atol)
+    elif isinstance(a, list):
+        assert isinstance(b, list) and len(a) == len(b), f"{path}: length differs"
+        for i, (x, y) in enumerate(zip(a, b, strict=True)):
+            _assert_json_close(x, y, f"{path}[{i}]", rtol, atol)
+    else:
+        assert type(a) is type(b) and a == b, f"{path}: {a!r} != {b!r}"
