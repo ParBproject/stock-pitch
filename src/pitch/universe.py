@@ -1,5 +1,14 @@
-"""M2 universe: the chosen stock, its verified peers (from results/screen.json) and the benchmark."""
+"""Pitch universes: each candidate, its verified peers (from results/screen.json) and the benchmark.
 
+V was the first pick (M2/M3, data in data/raw). It was archived after its DCF showed no upside;
+the pitch moved to the next screen candidates, whose data live in data/raw_<TICKER>.
+"""
+
+from pathlib import Path
+
+_ROOT = Path(__file__).resolve().parents[2]
+
+# Archived first pick (kept for M2 compatibility).
 TICKER = "V"
 PEERS = ["MA", "AXP", "PYPL", "COF", "SYF", "ALLY"]
 BENCHMARK = "SPY"
@@ -20,3 +29,26 @@ CONCEPTS = {
     "stockholders_equity": ["StockholdersEquity", "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"],
 }
 INSTANT_METRICS = {"total_assets", "stockholders_equity"}
+
+
+ACTIVE = "UNH"
+PITCHES = {
+    "V": {
+        "peers": PEERS,
+        "ciks": CIKS,
+        "financials": ["AXP", "COF", "SYF", "ALLY"],
+        "raw": _ROOT / "data" / "raw",
+    },
+    "UNH": {
+        "peers": ["ELV", "CI", "HUM", "CNC", "MOH", "CVS"],
+        "ciks": {"UNH": 731766, "ELV": 1156039, "CI": 1739940, "HUM": 49071, "CNC": 1071739, "MOH": 1179929, "CVS": 64803},
+        "financials": [],
+        "raw": _ROOT / "data" / "raw_UNH",
+    },
+    "COST": {
+        "peers": ["WMT", "TGT", "DG", "DLTR", "BJ", "PSMT"],
+        "ciks": {"COST": 909832, "WMT": 104169, "TGT": 27419, "DG": 29534, "DLTR": 935703, "BJ": 1531152, "PSMT": 1041803},
+        "financials": [],
+        "raw": _ROOT / "data" / "raw_COST",
+    },
+}

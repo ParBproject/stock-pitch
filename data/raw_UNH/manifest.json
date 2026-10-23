@@ -1,0 +1,18 @@
+{
+  "as_of": "2026-09-30",
+  "ticker": "UNH",
+  "fetched_at_utc": "2026-10-23T01:27:43Z",
+  "sources": "same as data/raw/manifest.json (Yahoo Finance, Ken French Data Library, SEC EDGAR XBRL, FRED DGS10)",
+  "yfinance_version": "1.7.0",
+  "sha256": {
+    "dgs10_daily.csv": "22e85800d089df57cbbf5268716db1a7a42001da84079d6a7bd9f1e7420302e7",
+    "ff3_monthly.csv": "017d5b7f4fe90d32749a8cd46cef18c8652077f980be8e15385d47790feac1f5",
+    "ff5_daily.csv": "90cd36f0319fedf0546fefd9290bd5178b7ddbbfcabea2870c224d6d491e9347",
+    "fundamentals_annual.csv": "a9e0f15fc2f2dd18b0ebb4993f3a917dfd41deeea1c7cba1ac3d7716be49d7e6",
+    "fundamentals_extra.csv": "b0bbc8819c517d52e701fc0eecde56a43097976fdfca7ebf60e85687162760e0",
+    "mom_daily.csv": "b71c3cadcfd97d5e752717adb9e3fec8dd6c03dab01d504d373189e05aed7911",
+    "prices_adj_close.csv": "ccef3251291597daf6c908e9656c793765a720c5ce705fa30315673463390711",
+    "shares_outstanding.csv": "53096ef37ecbf0d0234fc10c632c2f44edb59867ed9e82d9af7326c9acada789",
+    "volume.csv": "fb15c148e8f996a73dd0d92726f038c5c7e4702a04225d0b1db3ecf6e8e97a36"
+  }
+}

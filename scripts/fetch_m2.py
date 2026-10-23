@@ -25,15 +25,15 @@ FRENCH_FILES = {
 }
 
 
-def fetch_prices() -> None:
+def fetch_prices(raw_dir: Path = RAW, tickers: list = ALL_TICKERS) -> None:
     end = (pd.Timestamp(AS_OF) + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
-    raw = yf.download(ALL_TICKERS, start=PRICE_START, end=end, auto_adjust=False, progress=False)
-    adj = raw["Adj Close"][ALL_TICKERS].round(4)
+    raw = yf.download(tickers, start=PRICE_START, end=end, auto_adjust=False, progress=False)
+    adj = raw["Adj Close"][tickers].round(4)
     adj.index.name = "date"
-    adj.to_csv(RAW / "prices_adj_close.csv")
-    vol = raw["Volume"][ALL_TICKERS]
+    adj.to_csv(raw_dir / "prices_adj_close.csv")
+    vol = raw["Volume"][tickers]
     vol.index.name = "date"
-    vol.to_csv(RAW / "volume.csv")
+    vol.to_csv(raw_dir / "volume.csv")
 
 
 def parse_french(text: str) -> pd.DataFrame:
@@ -56,17 +56,19 @@ def parse_french(text: str) -> pd.DataFrame:
     return df.loc[PRICE_START:AS_OF]
 
 
-def fetch_french() -> None:
+def fetch_french(raw_dir: Path = RAW) -> None:
     for out, name in FRENCH_FILES.items():
         z = zipfile.ZipFile(io.BytesIO(requests.get(FRENCH + name, timeout=60).content))
         text = z.read(z.namelist()[0]).decode("latin-1")
-        parse_french(text).to_csv(RAW / out)
+        parse_french(text).to_csv(raw_dir / out)
 
 
-def fetch_fundamentals(concepts: dict = CONCEPTS, instant: set = INSTANT_METRICS, out: str = "fundamentals_annual.csv") -> None:
+def fetch_fundamentals(
+    concepts: dict = CONCEPTS, instant: set = INSTANT_METRICS, out: str = "fundamentals_annual.csv", raw_dir: Path = RAW, ciks: dict = CIKS
+) -> None:
     hdr = {"User-Agent": SEC_USER_AGENT}
     rows = []
-    for t, cik in CIKS.items():
+    for t, cik in ciks.items():
         facts = requests.get(f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json", headers=hdr, timeout=60).json()
         gaap = facts["facts"].get("us-gaap", {})
         for metric, names in concepts.items():
@@ -95,7 +97,7 @@ def fetch_fundamentals(concepts: dict = CONCEPTS, instant: set = INSTANT_METRICS
     # As originally reported: earliest filing per (ticker, metric, period_end), then best-priority concept.
     df = df.sort_values(["ticker", "metric", "period_end", "priority", "filed"])
     df = df.drop_duplicates(["ticker", "metric", "period_end"], keep="first").drop(columns="priority")
-    df.to_csv(RAW / out, index=False)
+    df.to_csv(raw_dir / out, index=False)
 
 
 def main() -> None:

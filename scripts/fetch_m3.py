@@ -7,6 +7,7 @@ import hashlib
 import io
 import json
 import zipfile
+from pathlib import Path
 
 import pandas as pd
 import requests
@@ -33,23 +34,23 @@ EXTRA_CONCEPTS = {
 EXTRA_INSTANT = {"cash", "long_term_debt", "long_term_debt_current"}
 
 
-def main() -> None:
-    fetch_fundamentals(EXTRA_CONCEPTS, EXTRA_INSTANT, "fundamentals_extra.csv")
+def fetch_extra(raw_dir: Path = RAW, tickers: list = ALL_TICKERS, ciks: dict | None = None) -> None:
+    fetch_fundamentals(EXTRA_CONCEPTS, EXTRA_INSTANT, "fundamentals_extra.csv", raw_dir, ciks or {})
 
     rows = []
-    for t in ALL_TICKERS:
+    for t in tickers:
         if t == BENCHMARK:
             continue
         s = yf.Ticker(t).get_shares_full(start="2025-01-01", end=(pd.Timestamp(AS_OF) + pd.Timedelta(days=1)).strftime("%Y-%m-%d"))
         s.index = s.index.tz_localize(None).normalize()
         s = s[s.index <= AS_OF].sort_index()
         rows.append({"ticker": t, "shares_date": s.index[-1].strftime("%Y-%m-%d"), "shares_outstanding": int(s.iloc[-1])})
-    pd.DataFrame(rows).to_csv(RAW / "shares_outstanding.csv", index=False)
+    pd.DataFrame(rows).to_csv(raw_dir / "shares_outstanding.csv", index=False)
 
     dgs = pd.read_csv(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10&cosd=2014-01-01&coed={AS_OF}")
     dgs.columns = ["date", "DGS10"]
     dgs["DGS10"] = pd.to_numeric(dgs["DGS10"], errors="coerce")
-    dgs.dropna().to_csv(RAW / "dgs10_daily.csv", index=False)
+    dgs.dropna().to_csv(raw_dir / "dgs10_daily.csv", index=False)
 
     z = zipfile.ZipFile(io.BytesIO(requests.get(FRENCH + "F-F_Research_Data_Factors_CSV.zip", timeout=60).content))
     text = z.read(z.namelist()[0]).decode("latin-1")
@@ -64,8 +65,13 @@ def main() -> None:
             break
     ffm = pd.DataFrame(rows, columns=header)
     ffm = ffm[ffm.month <= AS_OF[:4] + AS_OF[5:7]]
-    ffm.to_csv(RAW / "ff3_monthly.csv", index=False)
+    ffm.to_csv(raw_dir / "ff3_monthly.csv", index=False)
 
+
+def main() -> None:
+    from pitch.universe import CIKS
+
+    fetch_extra(RAW, ALL_TICKERS, CIKS)
     man_path = RAW / "manifest.json"
     man = json.loads(man_path.read_text())
     man["sources"].update(
