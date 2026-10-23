@@ -153,7 +153,7 @@ income and FCF shrink. That gap is the key driver to watch.</p>""",
     slides.append(
         (
             "Comps: a premium on earnings, a discount on cash",
-            f"""<div class="two"><table class="sm"><thead><tr><th></th><th>EV/EBITDA</th><th>P/E</th><th>FCF yield</th><th>Gaps</th></tr>
+            f"""<div class="two"><table class="sm"><thead><tr><th><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">Row</span></th><th>EV/EBITDA</th><th>P/E</th><th>FCF yield</th><th>Gaps</th></tr>
 </thead><tbody>{crow}<tr class="med"><td>Peer median</td><td>{N("comps_peer_median.ev_ebitda", "x1")}</td>
 <td>{N("comps_peer_median.pe", "x1")}</td><td>{N("comps_peer_median.fcf_yield", "pct1")}</td><td></td></tr></tbody></table>
 <img class="fig" src="assets/03_comps.png" alt="Comps bar charts"></div>
@@ -204,7 +204,7 @@ strongest t-stat. Alpha is not significant.</p>""",
     slides.append(
         (
             "Risk profile",
-            f"""<table><thead><tr><th></th><th>Ann. vol</th><th>Beta vs SPY</th><th>Max drawdown</th><th>1-day 95% VaR</th><th>1-day 95% ES</th></tr>
+            f"""<table><thead><tr><th><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">Row</span></th><th>Ann. vol</th><th>Beta vs SPY</th><th>Max drawdown</th><th>1-day 95% VaR</th><th>1-day 95% ES</th></tr>
 </thead><tbody>{rrows}</tbody></table>
 <p class="note">UNH is more volatile than SPY and has suffered a {N(f"risk.full.{t}.max_drawdown", "pct1")} drawdown. Its low
 recent beta ({N(f"risk.trailing_3y.{t}.beta_vs_spy", "d2")} trailing 3y) reflects stock-specific moves, not safety.</p>""",
@@ -214,7 +214,7 @@ recent beta ({N(f"risk.trailing_3y.{t}.beta_vs_spy", "d2")} trailing 3y) reflect
     slides.append(
         (
             "Backtested signal: it does not help",
-            f"""<div class="two"><table class="sm"><thead><tr><th></th><th>CAGR</th><th>Sharpe (rf = 0)</th><th>Max DD</th></tr></thead><tbody>
+            f"""<div class="two"><table class="sm"><thead><tr><th><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">Row</span></th><th>CAGR</th><th>Sharpe (rf = 0)</th><th>Max DD</th></tr></thead><tbody>
 <tr><td>Trend signal</td><td>{N("backtest.strategy.cagr", "pct1")}</td><td>{N("backtest.strategy.sharpe_rf0", "d2")}</td><td>{N("backtest.strategy.max_drawdown", "pct1")}</td></tr>
 <tr class=hl><td>Buy-and-hold {t}</td><td>{N("backtest.buy_hold.cagr", "pct1")}</td><td>{N("backtest.buy_hold.sharpe_rf0", "d2")}</td><td>{N("backtest.buy_hold.max_drawdown", "pct1")}</td></tr>
 <tr><td>SPY</td><td>{N("backtest.SPY.cagr", "pct1")}</td><td>{N("backtest.SPY.sharpe_rf0", "d2")}</td><td>{N("backtest.SPY.max_drawdown", "pct1")}</td></tr>
@@ -233,7 +233,7 @@ This is a valuation call, not a momentum trade.</p>""",
     slides.append(
         (
             "Bull, base and bear",
-            f"""<div class="two"><table class="sm"><thead><tr><th></th><th>Stage-1 growth</th><th>WACC</th><th>Value</th><th>vs price</th></tr></thead>
+            f"""<div class="two"><table class="sm"><thead><tr><th><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">Row</span></th><th>Stage-1 growth</th><th>WACC</th><th>Value</th><th>vs price</th></tr></thead>
 <tbody>{srows}</tbody></table><img class="fig" src="assets/06_scenarios.png" alt="Scenario targets"></div>
 <p class="note"><b>The bear case is {N("scenarios.bear.upside", "spct1")}, below today's price.</b> Growth is set at the lower quartile, median and upper
 quartile of UNH's own rolling 5-year FCF growth, and WACC moves by ±{N("assumptions.scenario_wacc_shift.value", "pct1")}. No probability
@@ -293,7 +293,7 @@ each number on these slides against that file.</li>
     slides.append(
         (
             "Appendix A: rejected candidates",
-            f"""<table><thead><tr><th></th><th>Price</th><th>DCF value</th><th>vs price</th><th>Bear</th><th>Bull</th><th>Price-implied growth</th></tr></thead><tbody>
+            f"""<table><thead><tr><th><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">Row</span></th><th>Price</th><th>DCF value</th><th>vs price</th><th>Bear</th><th>Bull</th><th>Price-implied growth</th></tr></thead><tbody>
 <tr><td>COST</td><td>{N("comparison.COST.price", "usd2")}</td><td>{N("comparison.COST.implied_value", "usd2")}</td><td>{N("comparison.COST.upside", "spct1")}</td>
 <td>{N("comparison.COST.bear", "usd2")}</td><td>{N("comparison.COST.bull", "usd2")}</td><td>{N("comparison.COST.reverse_dcf_stage1_growth", "pct1")}</td></tr>
 </tbody></table>
@@ -326,7 +326,9 @@ PAGE = """<!doctype html>
 <title>{{TICKER}} long pitch</title>
 <link rel="stylesheet" href="assets/tokens.css"><link rel="stylesheet" href="assets/components.css"><link rel="stylesheet" href="assets/deck.css">
 </head><body>
+<main><h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">{{TICKER}} long pitch</h1>
 {{SLIDES}}
+</main>
 <nav class="deck-nav">← → or scroll · <a href="style-guide.html" style="color:inherit">design system</a></nav>
 <script>
 const s=[...document.querySelectorAll('.slide')];s.forEach((x,i)=>x.dataset.idx=(i+1)+' / '+s.length);

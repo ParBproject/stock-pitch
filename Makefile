@@ -1,7 +1,7 @@
 PY ?= python
 export PYTHONPATH := src
 
-.PHONY: all data screen summary notebooks deck pdf web lint test clean
+.PHONY: all data screen summary notebooks deck pdf web site lint test linkcheck clean
 
 ## Offline: rebuild everything from the frozen snapshots, then lint and test.
 all: screen notebooks summary deck pdf web lint test
@@ -31,6 +31,14 @@ pdf: deck
 web:
 	$(PY) scripts/build_web_data.py
 	cd web && npm ci --silent && npm run build
+
+## GitHub Pages bundle: the web deck at the root, the static deck, style guide and PDF under deck/.
+site: web pdf
+	$(PY) scripts/build_site.py
+
+## Check every artifact link in the README and on the live site (network).
+linkcheck:
+	$(PY) scripts/check_links.py
 
 notebooks:
 	$(PY) -m jupyter nbconvert --to notebook --execute --inplace notebooks/*.ipynb
