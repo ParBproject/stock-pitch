@@ -23,6 +23,29 @@
     <div class="stats" id="hero-stats"></div>
     <p class="note" id="hero-note"></p>
   </section>
+  <section class="panel" id="p-panel" data-title="Scenario panel">
+    <div class="kicker">Scenario panel</div><h2>Move the inputs, see the value</h2>
+    <div class="sp-layout">
+      <aside class="sp-controls card" id="sp-sheet" aria-label="Scenario inputs">
+        <button class="sp-handle" id="sp-handle" type="button" aria-expanded="true" aria-controls="sp-body"><span></span>Inputs <small id="sp-handle-sum" class="num"></small></button>
+        <div id="sp-body">
+          <fieldset class="sp-field"><legend>Beta behind WACC</legend><div class="seg" id="sp-beta" role="radiogroup"></div></fieldset>
+          <label class="sp-field" for="sp-g">Stage-1 FCF growth <output id="sp-g-out" class="num"></output></label>
+          <input type="range" id="sp-g" min="0" step="1">
+          <label class="sp-field" for="sp-w">WACC <output id="sp-w-out" class="num"></output></label>
+          <input type="range" id="sp-w" min="0" step="1">
+          <div class="sp-presets" id="sp-presets" role="group" aria-label="Scenario presets"></div>
+          <p class="note" id="sp-help"></p>
+        </div>
+      </aside>
+      <div class="sp-out">
+        <div class="sp-target" aria-live="polite"><span class="muted">Value per share</span><b class="num" id="sp-value"></b>
+          <span id="sp-up" class="badge"></span><span class="muted" id="sp-vs"></span></div>
+        <div class="chart sp-chart" id="c-fan" role="img" aria-label="FCF fan chart"></div>
+        <div class="chart sp-chart" id="c-sens" role="img" aria-label="Sensitivity heatmap with the selected inputs marked"></div>
+      </div>
+    </div>
+  </section>
   <section class="panel" id="p-price" data-title="Price and drawdown">
     <div class="kicker">Price, brush to analyse</div><h2>UNH vs SPY and peers</h2>
     <div class="chips" id="peer-chips" role="group" aria-label="Peer filter"></div>
