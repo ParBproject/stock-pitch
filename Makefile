@@ -34,7 +34,7 @@ web:
 
 ## GitHub Pages bundle: the web deck at the root, the static deck, style guide and PDF under deck/.
 site: web pdf
-	rm -rf site && cp -r web/dist site && cp -r deck site/deck && touch site/.nojekyll
+	$(PY) scripts/build_site.py
 
 ## Check every artifact link in the README and on the live site (network).
 linkcheck:

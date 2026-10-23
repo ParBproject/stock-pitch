@@ -96,7 +96,7 @@ th,td{padding:var(--sp-2) var(--sp-3);border-bottom:1px solid var(--c-line);text
 th{color:var(--c-muted);font-weight:var(--fw-medium);font-size:var(--fs-2)}
 tr.hl td{background:var(--c-accent-tint)}tr.med td{color:var(--c-accent-strong)}
 table.sm{font-size:var(--fs-2)}td.src,td.gap{color:var(--c-muted);font-size:var(--fs-1)}
-img.fig{width:100%;border-radius:var(--r-sm);border:1px solid var(--c-line)}
+img.fig{width:100%;height:auto;border-radius:var(--r-sm);border:1px solid var(--c-line)}
 """
 
 DECK_CSS = """/* Deck layout on the 12-column grid, 8px spacing scale. */
