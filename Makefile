@@ -1,10 +1,10 @@
 PY ?= python
 export PYTHONPATH := src
 
-.PHONY: all data screen summary notebooks lint test clean
+.PHONY: all data screen summary notebooks deck pdf lint test clean
 
 ## Offline: rebuild everything from the frozen snapshots, then lint and test.
-all: screen notebooks summary lint test
+all: screen notebooks summary deck pdf lint test
 
 ## Online: re-fetch snapshots. This changes data and results, so review the diff.
 data:
@@ -19,6 +19,13 @@ screen:
 
 summary:
 	$(PY) scripts/build_summary.py
+
+deck:
+	$(PY) scripts/build_deck.py
+
+## Needs Playwright Chromium (python -m playwright install chromium).
+pdf: deck
+	$(PY) scripts/export_deck.py
 
 notebooks:
 	$(PY) -m jupyter nbconvert --to notebook --execute --inplace notebooks/*.ipynb

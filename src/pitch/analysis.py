@@ -184,6 +184,48 @@ def comps() -> pd.DataFrame:
     return pd.DataFrame(rows).set_index("ticker")
 
 
+def business_snapshot(years: int = 5) -> dict:
+    """Last `years` fiscal years of headline 10-K figures (USD) for the pitched stock, from SEC XBRL."""
+    fy = fy_table(_t())
+    fy = fy.assign(fcf=fy["operating_cash_flow"] - fy["capex"])
+    cols = ["revenue", "operating_income", "net_income", "operating_cash_flow", "capex", "fcf"]
+    tail = fy[[c for c in cols if c in fy]].dropna(how="all").tail(years)
+    out = {}
+    for d, row in tail.iterrows():
+        rec = {k: r(v, 0) for k, v in row.items()}
+        rec["operating_margin"] = r(row.get("operating_income", np.nan) / row["revenue"])
+        rec["fcf_margin"] = r(row["fcf"] / row["revenue"])
+        out[d.strftime("%Y-%m-%d")] = rec
+    return out
+
+
+def beta_sensitivity() -> dict:
+    """Re-run the base DCF with the full-sample (2014 to as-of) beta instead of the 5y beta. Nothing else changes."""
+    w = wacc_inputs()
+    rets = load_returns()[[_t(), BENCHMARK]].loc[:AS_OF].dropna()
+    beta = rets.cov().iloc[0, 1] / rets[BENCHMARK].var()
+    ke = w["risk_free"]["value"] + beta * w["equity_risk_premium"]["value"]
+    we = w["equity_weight"]["value"]
+    wacc = we * ke + (1 - we) * w["pre_tax_cost_of_debt"]["value"] * (1 - w["tax_rate"]["value"])
+    v = dcf_value(stage1_growth(), wacc)
+    price = price_at_asof(_t())
+    return {
+        "beta": r(beta),
+        "wacc": r(wacc),
+        "implied_value": r(v, 2),
+        "upside": r(v / price - 1),
+        "source": "same DCF, beta from all daily returns since 2014 vs SPY",
+    }
+
+
+def comps_medians() -> dict:
+    """Peer medians (excluding the pitched stock) over the multiples that are reported."""
+    c = comps().drop(index=_t())
+    return {k: r(c[k].median(), 4) for k in ("ev_ebitda", "pe", "fcf_yield")} | {
+        "n": {k: int(c[k].notna().sum()) for k in ("ev_ebitda", "pe", "fcf_yield")}
+    }
+
+
 # ---------- 04 DCF ----------
 def fcf_history() -> pd.Series:
     fy = fy_table(_t())
