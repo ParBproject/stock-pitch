@@ -95,6 +95,17 @@ Notebooks `02` to `06` compute everything below from frozen snapshots and write 
 - **Tests:** `tests/test_deck.py` checks every number on the slides against the JSON, and fails if any digit appears in slide text that doesn't come from the JSON.
 - **Content:** the risks and scenarios slides state the bear case, the low-beta WACC (and what the full-sample beta does to it), the decline in FCF, and the Sharpe ratios that trail SPY. The appendix covers V and COST as rejected candidates.
 
+## M5: design system
+
+- **Tokens:** [`design/tokens.json`](design/tokens.json) is the single source for:
+  - colors: #06080b background, #10B981 accent
+  - type: Inter on a 12/14/16/20/28/40 scale, with JetBrains Mono for tabular numbers (fonts are self-hosted, under the OFL license)
+  - layout: a 12-column grid on an 8px scale
+  - motion: 200 to 300 ms, which drops to 0 under `prefers-reduced-motion`
+- **Generated files:** `src/pitch/design.py` turns the tokens into `deck/assets/tokens.css`, `components.css` and `deck.css`, and builds the [style guide](deck/style-guide.html). The style guide includes WCAG AA contrast checks for every text pair.
+- **Charts:** the chart theme in `src/pitch/plotting.py` reads the same tokens.
+- **Tests:** `tests/test_design.py` checks contrast, the motion range and the reduced-motion rule, that the generated CSS is current, and that components use tokens only.
+
 ## Reproduce
 
 ```bash

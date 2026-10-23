@@ -106,9 +106,9 @@ def render(data: dict) -> tuple[str, list[str]]:
             f"""<p class="lede">Base-case DCF value {N("valuation.implied_value", "usd2")} per share against an as-of price of
 {N("valuation.price", "usd2")}: {N("valuation.upside", "spct1")}.</p>
 <div class="stats">
-<div><b>{N("scenarios.bear.target", "usd2")}</b><span>bear ({N("scenarios.bear.upside", "spct1")})</span></div>
-<div class="hl"><b>{N("scenarios.base.target", "usd2")}</b><span>base ({N("scenarios.base.upside", "spct1")})</span></div>
-<div><b>{N("scenarios.bull.target", "usd2")}</b><span>bull ({N("scenarios.bull.upside", "spct1")})</span></div>
+<div class="stat"><b>{N("scenarios.bear.target", "usd2")}</b><span>bear ({N("scenarios.bear.upside", "spct1")})</span></div>
+<div class="stat hl"><b>{N("scenarios.base.target", "usd2")}</b><span>base ({N("scenarios.base.upside", "spct1")})</span></div>
+<div class="stat"><b>{N("scenarios.bull.target", "usd2")}</b><span>bull ({N("scenarios.bull.upside", "spct1")})</span></div>
 </div>
 <p class="note">As of {N("as_of", "date")}. The value is an intrinsic-value estimate, not a dated price target. The bear case sits
 <em>below</em> the price, and the result depends on a low beta (slide 11). Educational project, not investment advice.</p>""",
@@ -156,7 +156,7 @@ income and FCF shrink. That gap is the key driver to watch.</p>""",
             f"""<div class="two"><table class="sm"><thead><tr><th></th><th>EV/EBITDA</th><th>P/E</th><th>FCF yield</th><th>Gaps</th></tr>
 </thead><tbody>{crow}<tr class="med"><td>Peer median</td><td>{N("comps_peer_median.ev_ebitda", "x1")}</td>
 <td>{N("comps_peer_median.pe", "x1")}</td><td>{N("comps_peer_median.fcf_yield", "pct1")}</td><td></td></tr></tbody></table>
-<img src="assets/03_comps.png" alt="Comps bar charts"></div>
+<img class="fig" src="assets/03_comps.png" alt="Comps bar charts"></div>
 <p class="note">UNH trades above the peer median on P/E and EV/EBITDA but offers a higher FCF yield. Comps alone don't make the case.
 Gaps are left blank, never estimated.</p>""",
             "Relative value",
@@ -170,7 +170,7 @@ Gaps are left blank, never estimated.</p>""",
     slides.append(
         (
             "DCF and reverse DCF: what the price assumes",
-            f"""<div class="two"><table class="sm"><tbody>{wrows}</tbody></table><img src="assets/04_dcf_growth_sensitivity.png" alt="DCF growth sensitivity"></div>
+            f"""<div class="two"><table class="sm"><tbody>{wrows}</tbody></table><img class="fig" src="assets/04_dcf_growth_sensitivity.png" alt="DCF growth sensitivity"></div>
 <p class="note">Base FCF {N("valuation.base_fcf", "bn1")} ({html.escape(v["base_fcf_source"])}). Stage-1 growth {N("valuation.stage1_growth", "pct1")}
 fades to {N("assumptions.terminal_growth.value", "pct1")} terminal growth over {N("assumptions.fade_years.value", "int")} years.
 Value {N("valuation.implied_value", "usd2")}. The price implies {N("valuation.reverse_dcf_stage1_growth", "pct1")} growth.</p>""",
@@ -185,7 +185,7 @@ Value {N("valuation.implied_value", "usd2")}. The price implies {N("valuation.re
             "Factor exposures: what you are really buying",
             f"""<div class="two"><table class="sm"><thead><tr><th>Factor</th><th>Beta</th><th>t-stat</th></tr></thead><tbody>{brows}
 <tr><td>Alpha (annual)</td><td>{N("factor_model.alpha_annual", "pct1")}</td><td>{N("factor_model.alpha_t", "t1")}</td></tr></tbody></table>
-<img src="assets/02_rolling_betas.png" alt="Rolling factor betas"></div>
+<img class="fig" src="assets/02_rolling_betas.png" alt="Rolling factor betas"></div>
 <p class="note">FF5 plus momentum, daily, {N("factor_model.window.start", "date")} to {N("factor_model.window.end", "date")}. R²
 {N("factor_model.r_squared", "d2")}: most of UNH's risk is stock-specific. After the market, the profitability (RMW) tilt has the
 strongest t-stat. Alpha is not significant.</p>""",
@@ -218,7 +218,7 @@ recent beta ({N(f"risk.trailing_3y.{t}.beta_vs_spy", "d2")} trailing 3y) reflect
 <tr><td>Trend signal</td><td>{N("backtest.strategy.cagr", "pct1")}</td><td>{N("backtest.strategy.sharpe_rf0", "d2")}</td><td>{N("backtest.strategy.max_drawdown", "pct1")}</td></tr>
 <tr class=hl><td>Buy-and-hold {t}</td><td>{N("backtest.buy_hold.cagr", "pct1")}</td><td>{N("backtest.buy_hold.sharpe_rf0", "d2")}</td><td>{N("backtest.buy_hold.max_drawdown", "pct1")}</td></tr>
 <tr><td>SPY</td><td>{N("backtest.SPY.cagr", "pct1")}</td><td>{N("backtest.SPY.sharpe_rf0", "d2")}</td><td>{N("backtest.SPY.max_drawdown", "pct1")}</td></tr>
-</tbody></table><img src="assets/05_backtest.png" alt="Backtest equity curves"></div>
+</tbody></table><img class="fig" src="assets/05_backtest.png" alt="Backtest equity curves"></div>
 <p class="note">Out-of-sample {N("backtest.oos_start", "date")} to {N("backtest.oos_end", "date")}, walk-forward window choice, next-day
 execution, {N("assumptions.trading_cost_bps.value", "int")} bp per switch. Both the signal and buy-and-hold UNH trail SPY on Sharpe.
 This is a valuation call, not a momentum trade.</p>""",
@@ -234,7 +234,7 @@ This is a valuation call, not a momentum trade.</p>""",
         (
             "Bull, base and bear",
             f"""<div class="two"><table class="sm"><thead><tr><th></th><th>Stage-1 growth</th><th>WACC</th><th>Value</th><th>vs price</th></tr></thead>
-<tbody>{srows}</tbody></table><img src="assets/06_scenarios.png" alt="Scenario targets"></div>
+<tbody>{srows}</tbody></table><img class="fig" src="assets/06_scenarios.png" alt="Scenario targets"></div>
 <p class="note"><b>The bear case is {N("scenarios.bear.upside", "spct1")}, below today's price.</b> Growth is set at the lower quartile, median and upper
 quartile of UNH's own rolling 5-year FCF growth, and WACC moves by ±{N("assumptions.scenario_wacc_shift.value", "pct1")}. No probability
 weights are applied, because there is no data-based way to set them. All three cases still use the 5y beta that sets WACC at
@@ -270,7 +270,7 @@ The full-sample beta of {N("beta_sensitivity.beta", "d2")} gives a {N("beta_sens
 <li><b>The track record is weak.</b> Buy-and-hold UNH's Sharpe of {N("backtest.buy_hold.sharpe_rf0", "d2")} trails SPY's
 {N("backtest.SPY.sharpe_rf0", "d2")}, with a {N(f"risk.full.{t}.max_drawdown", "pct1")} max drawdown.</li>
 </ul>
-<p class="note"><b>I would drop the long</b> if the next 10-K shows FCF still falling, or if a re-estimated beta pushes WACC to the point
+<p class="callout risk note"><b>I would drop the long</b> if the next 10-K shows FCF still falling, or if a re-estimated beta pushes WACC to the point
 where the base value falls below the price.</p>""",
             "Risks",
         )
@@ -324,35 +324,18 @@ def _strip_digits_note(reason: str) -> str:
 PAGE = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{TICKER}} long pitch</title>
-<style>
-:root{--bg:#06080b;--fg:#e5e7eb;--mut:#94a3b8;--acc:#10B981;--line:#1f2937}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 Inter,"Segoe UI",system-ui,sans-serif}
-.slide{width:1280px;height:720px;margin:24px auto;padding:56px 72px;position:relative;border:1px solid var(--line);border-radius:16px;
-overflow:hidden;background:radial-gradient(1200px 500px at 100% 0,rgba(16,185,129,.07),transparent 60%),var(--bg)}
-.slide::after{content:attr(data-idx);position:absolute;right:28px;bottom:20px;color:var(--mut);font-size:13px}
-.kicker{color:var(--acc);text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:600}
-h2{font-size:38px;margin:6px 0 24px;letter-spacing:-.01em}
-.lede{font-size:28px;max-width:1000px}.n{font-variant-numeric:tabular-nums;color:#fff;font-weight:600}
-.stats{display:flex;gap:24px;margin:36px 0}.stats div{flex:1;border:1px solid var(--line);border-radius:12px;padding:20px 24px}
-.stats b{display:block;font-size:40px}.stats span{color:var(--mut)}.stats .hl{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc) inset}
-.note{color:var(--mut);font-size:15px;max-width:1120px}.note b,.note em{color:var(--fg)}
-table{border-collapse:collapse;width:100%;font-size:16px}th,td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left}
-th{color:var(--mut);font-weight:500}tr.hl td{background:rgba(16,185,129,.09)}tr.med td{color:var(--acc)}
-table.sm{font-size:14px}td.src,td.gap{color:var(--mut);font-size:12.5px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}.two img{width:100%;border-radius:8px}
-ol.big li,ul.big li{font-size:22px;margin:0 0 18px}ul.risks li{font-size:18px;margin:0 0 14px}
-code{color:var(--acc)}.na{color:var(--mut)}
-@media print{@page{size:1280px 720px;margin:0}.slide{margin:0;border:0;border-radius:0;page-break-after:always}nav{display:none}}
-@media (max-width:1300px){.slide{transform-origin:top left}}
-nav{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);color:var(--mut);font-size:13px}
-</style></head><body>
+<link rel="stylesheet" href="assets/tokens.css"><link rel="stylesheet" href="assets/components.css"><link rel="stylesheet" href="assets/deck.css">
+</head><body>
 {{SLIDES}}
-<nav>← → or scroll</nav>
+<nav class="deck-nav">← → or scroll · <a href="style-guide.html" style="color:inherit">design system</a></nav>
 <script>
 const s=[...document.querySelectorAll('.slide')];s.forEach((x,i)=>x.dataset.idx=(i+1)+' / '+s.length);
 function fit(){const k=Math.min(1,(innerWidth-16)/1280);s.forEach(x=>{x.style.zoom=k})}addEventListener('resize',fit);fit();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.2});s.forEach(x=>io.observe(x));
+if(matchMedia('print').matches)s.forEach(x=>x.classList.add('in'));addEventListener('beforeprint',()=>s.forEach(x=>x.classList.add('in')));
 let i=0;addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key))i=Math.min(i+1,s.length-1);
-else if(['ArrowLeft','PageUp'].includes(e.key))i=Math.max(i-1,0);else return;e.preventDefault();s[i].scrollIntoView({behavior:'smooth'})});
+else if(['ArrowLeft','PageUp'].includes(e.key))i=Math.max(i-1,0);else return;e.preventDefault();
+s[i].scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})});
 </script></body></html>
 """
 
@@ -367,4 +350,7 @@ def build() -> list[str]:
     for f in FIGS:
         shutil.copyfile(ROOT / "figures" / data["ticker"] / f"{f}.png", out / "assets" / f"{f}.png")
     (out / "index.html").write_text(page)
+    from pitch import design
+
+    design.build()
     return titles
