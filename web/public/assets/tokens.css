@@ -1,0 +1,61 @@
+/* Generated from design/tokens.json by src/pitch/design.py. Do not edit by hand. */
+@font-face{font-family:"Inter";src:url("fonts/Inter.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"JetBrains Mono";src:url("fonts/JetBrainsMono.woff2") format("woff2");font-weight:100 800;font-display:swap}
+:root{
+  --c-bg:#06080b;
+  --c-surface:#0d1117;
+  --c-surface-2:#141a22;
+  --c-line:#1f2937;
+  --c-fg:#e5e7eb;
+  --c-fg-strong:#ffffff;
+  --c-muted:#94a3b8;
+  --c-accent:#10B981;
+  --c-accent-strong:#34d399;
+  --c-accent-tint:#0b2a20;
+  --c-positive:#34d399;
+  --c-negative:#f87171;
+  --c-warning:#fbbf24;
+  --c-info:#60a5fa;
+  --chart-1:#10B981;
+  --chart-2:#60a5fa;
+  --chart-3:#fbbf24;
+  --chart-4:#f472b6;
+  --chart-5:#a78bfa;
+  --chart-6:#94a3b8;
+  --chart-7:#f87171;
+  --font-sans:"Inter",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,monospace;
+  --fs-1:12px;
+  --fs-2:14px;
+  --fs-3:16px;
+  --fs-4:20px;
+  --fs-5:28px;
+  --fs-6:40px;
+  --fw-regular:400;
+  --fw-medium:500;
+  --fw-semibold:600;
+  --fw-bold:700;
+  --lh-tight:1.15;
+  --lh-body:1.5;
+  --sp-0:0px;
+  --sp-1:4px;
+  --sp-2:8px;
+  --sp-3:16px;
+  --sp-4:24px;
+  --sp-5:32px;
+  --sp-6:40px;
+  --sp-7:48px;
+  --sp-8:64px;
+  --sp-9:80px;
+  --grid-cols:12;
+  --grid-gutter:24px;
+  --grid-margin:64px;
+  --r-sm:8px;
+  --r-md:12px;
+  --r-lg:16px;
+  --mo-fast:200ms;
+  --mo-base:250ms;
+  --mo-slow:300ms;
+  --mo-ease:cubic-bezier(0.2, 0, 0, 1);
+}
+@media (prefers-reduced-motion:reduce){:root{--mo-fast:0ms;--mo-base:0ms;--mo-slow:0ms}}
