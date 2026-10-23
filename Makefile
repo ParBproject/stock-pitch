@@ -1,10 +1,10 @@
 PY ?= python
 export PYTHONPATH := src
 
-.PHONY: all data screen summary notebooks deck pdf lint test clean
+.PHONY: all data screen summary notebooks deck pdf web lint test clean
 
 ## Offline: rebuild everything from the frozen snapshots, then lint and test.
-all: screen notebooks summary deck pdf lint test
+all: screen notebooks summary deck pdf web lint test
 
 ## Online: re-fetch snapshots. This changes data and results, so review the diff.
 data:
@@ -26,6 +26,11 @@ deck:
 ## Needs Playwright Chromium (python -m playwright install chromium).
 pdf: deck
 	$(PY) scripts/export_deck.py
+
+## Interactive deck (needs Node 20+): data export, then a static Vite build in web/dist.
+web:
+	$(PY) scripts/build_web_data.py
+	cd web && npm ci --silent && npm run build
 
 notebooks:
 	$(PY) -m jupyter nbconvert --to notebook --execute --inplace notebooks/*.ipynb

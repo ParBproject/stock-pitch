@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Interactive long pitch for UnitedHealth Group (UNH): DCF, comps, factor exposures, risk and a walk-forward backtest, all reproducible from frozen data.">
+<meta name="theme-color" content="#06080b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Crect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%2310B981%27/%3E%3C/svg%3E">
+<link rel="preload" href="%BASE_URL%assets/fonts/Inter.woff2" as="font" type="font/woff2" crossorigin>
+<title>UNH long pitch: interactive deck</title>
+<link rel="stylesheet" href="%BASE_URL%assets/tokens.css">
+<link rel="stylesheet" href="%BASE_URL%assets/components.css">
+</head>
+<body>
+<header class="top">
+  <div><div class="kicker">stock-pitch</div><strong>UNH long pitch</strong> <span class="muted" id="asof"></span></div>
+  <nav aria-label="Sections" id="toc"></nav>
+</header>
+<main id="deck" aria-live="polite">
+  <section class="panel" id="p-hero" data-title="Recommendation">
+    <div class="kicker">Recommendation</div><h1>UnitedHealth Group (UNH): Long</h1>
+    <p class="lede" id="hero-lede"></p>
+    <div class="stats" id="hero-stats"></div>
+    <p class="note" id="hero-note"></p>
+  </section>
+  <section class="panel" id="p-price" data-title="Price and drawdown">
+    <div class="kicker">Price, brush to analyse</div><h2>UNH vs SPY and peers</h2>
+    <div class="chips" id="peer-chips" role="group" aria-label="Peer filter"></div>
+    <div class="chart" id="c-price" role="img" aria-label="Rebased weekly prices with zoom and brush"></div>
+    <div class="grid3" id="window-stats" aria-live="polite"></div>
+    <p class="note">Drag the slider or brush a range. The stats recompute for that window from weekly adjusted closes. Peer chips are linked to the comps chart.</p>
+  </section>
+  <section class="panel" id="p-comps" data-title="Comps">
+    <div class="kicker">Relative value, click a bar to drill down</div><h2>Comps</h2>
+    <div class="chips" id="metric-chips" role="group" aria-label="Multiple"></div>
+    <div class="two"><div class="chart" id="c-comps" role="img" aria-label="Comps bar chart"></div><div class="card" id="comp-detail"></div></div>
+  </section>
+  <section class="panel" id="p-dcf" data-title="DCF">
+    <div class="kicker">Valuation, hover or click a cell</div><h2>DCF value by stage-1 growth and WACC</h2>
+    <div class="two"><div class="chart" id="c-dcf" role="img" aria-label="DCF sensitivity heatmap"></div><div class="card" id="dcf-detail"></div></div>
+  </section>
+  <section class="panel" id="p-scen" data-title="Scenarios">
+    <div class="kicker">Scenarios</div><h2>Bull, base and bear</h2>
+    <div class="two"><div class="chart" id="c-scen" role="img" aria-label="Scenario values vs price"></div><div class="card" id="scen-detail"></div></div>
+  </section>
+  <section class="panel" id="p-factors" data-title="Factors">
+    <div class="kicker">Exposures, toggle factors and zoom</div><h2>Rolling 252-day factor betas</h2>
+    <div class="chart" id="c-factors" role="img" aria-label="Rolling factor betas"></div>
+    <p class="note" id="factor-note"></p>
+  </section>
+  <section class="panel" id="p-bt" data-title="Backtest">
+    <div class="kicker">Evidence</div><h2>Walk-forward signal vs buy-and-hold and SPY</h2>
+    <div class="chart" id="c-bt" role="img" aria-label="Backtest growth of one dollar"></div>
+    <div id="bt-table"></div>
+  </section>
+  <section class="panel" id="p-risks" data-title="Risks">
+    <div class="kicker">Risks</div><h2>What would change my mind</h2>
+    <ul class="risks" id="risk-list"></ul>
+  </section>
+  <section class="panel" id="p-rej" data-title="Rejected">
+    <div class="kicker">Appendix</div><h2>Rejected candidates</h2>
+    <div id="rejected"></div>
+    <p class="note">All candidates were run with the same code and assumptions. Data: Yahoo Finance, SEC EDGAR XBRL, Ken French library, FRED. Educational project, not investment advice. <a href="https://github.com/ParBproject/stock-pitch">Source on GitHub</a>.</p>
+  </section>
+</main>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
