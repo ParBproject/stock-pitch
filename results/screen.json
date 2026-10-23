@@ -1,0 +1,218 @@
+{
+  "as_of": "2026-09-30",
+  "excluded": [
+    "AAPL",
+    "MSFT",
+    "KO",
+    "JNJ",
+    "CAT",
+    "XOM"
+  ],
+  "method": {
+    "weights": {
+      "coverage": 0.25,
+      "peers": 0.25,
+      "testability": 0.25,
+      "recognisability": 0.25
+    },
+    "gates": ">= 10y price history and >= 5 peers sharing the Yahoo Finance industry label",
+    "coverage": "share of checks met: price history >= 10y; SEC 10-K FY revenue, net income, diluted EPS >= 10 years",
+    "peers": "verified same-industry peers / 8 (capped at 1)",
+    "testability": "share of verified peers with >= 10y price history (needed for comps, factor and backtest work)",
+    "recognisability": "market cap / largest market cap among candidates (proxy; market cap as of snapshot fetch)"
+  },
+  "candidates": [
+    {
+      "ticker": "V",
+      "name": "Visa Inc.",
+      "industry": "Credit Services",
+      "price_history_years": 12.74,
+      "sec_fy_years": {
+        "eps_diluted": 0,
+        "net_income": 19,
+        "revenue": 19
+      },
+      "verified_peers": [
+        "MA",
+        "AXP",
+        "PYPL",
+        "COF",
+        "SYF",
+        "ALLY"
+      ],
+      "peers_dropped_industry_mismatch": [],
+      "peer_history_years": {
+        "MA": 12.74,
+        "AXP": 12.74,
+        "PYPL": 11.24,
+        "COF": 12.74,
+        "SYF": 12.17,
+        "ALLY": 12.67
+      },
+      "market_cap_usd": 777863364608,
+      "scores": {
+        "coverage": 0.75,
+        "peers": 0.75,
+        "testability": 1.0,
+        "recognisability": 0.8704
+      },
+      "total": 0.8426,
+      "eligible": true,
+      "ineligible_reason": null
+    },
+    {
+      "ticker": "UNH",
+      "name": "UnitedHealth Group Incorporated",
+      "industry": "Healthcare Plans",
+      "price_history_years": 12.74,
+      "sec_fy_years": {
+        "eps_diluted": 19,
+        "net_income": 19,
+        "revenue": 19
+      },
+      "verified_peers": [
+        "ELV",
+        "CI",
+        "HUM",
+        "CNC",
+        "MOH",
+        "CVS"
+      ],
+      "peers_dropped_industry_mismatch": [],
+      "peer_history_years": {
+        "ELV": 12.74,
+        "CI": 12.74,
+        "HUM": 12.74,
+        "CNC": 12.74,
+        "MOH": 12.74,
+        "CVS": 12.74
+      },
+      "market_cap_usd": 381459857408,
+      "scores": {
+        "coverage": 1.0,
+        "peers": 0.75,
+        "testability": 1.0,
+        "recognisability": 0.4268
+      },
+      "total": 0.7942,
+      "eligible": true,
+      "ineligible_reason": null
+    },
+    {
+      "ticker": "COST",
+      "name": "Costco Wholesale Corporation",
+      "industry": "Discount Stores",
+      "price_history_years": 12.74,
+      "sec_fy_years": {
+        "eps_diluted": 19,
+        "net_income": 19,
+        "revenue": 19
+      },
+      "verified_peers": [
+        "WMT",
+        "TGT",
+        "DG",
+        "DLTR",
+        "BJ",
+        "PSMT"
+      ],
+      "peers_dropped_industry_mismatch": [],
+      "peer_history_years": {
+        "WMT": 12.74,
+        "TGT": 12.74,
+        "DG": 12.74,
+        "DLTR": 12.74,
+        "BJ": 8.26,
+        "PSMT": 12.74
+      },
+      "market_cap_usd": 451198746624,
+      "scores": {
+        "coverage": 1.0,
+        "peers": 0.75,
+        "testability": 0.8333,
+        "recognisability": 0.5049
+      },
+      "total": 0.7721,
+      "eligible": true,
+      "ineligible_reason": null
+    },
+    {
+      "ticker": "JPM",
+      "name": "JPMorgan Chase & Co.",
+      "industry": "Banks - Diversified",
+      "price_history_years": 12.74,
+      "sec_fy_years": {
+        "eps_diluted": 19,
+        "net_income": 19,
+        "revenue": 19
+      },
+      "verified_peers": [
+        "BAC",
+        "C",
+        "WFC"
+      ],
+      "peers_dropped_industry_mismatch": [
+        "GS",
+        "MS",
+        "USB",
+        "PNC",
+        "TFC"
+      ],
+      "peer_history_years": {
+        "BAC": 12.74,
+        "C": 12.74,
+        "WFC": 12.74
+      },
+      "market_cap_usd": 893715677184,
+      "scores": {
+        "coverage": 1.0,
+        "peers": 0.375,
+        "testability": 1.0,
+        "recognisability": 1.0
+      },
+      "total": 0.8438,
+      "eligible": false,
+      "ineligible_reason": "only 3 same-industry peers (< 5)"
+    },
+    {
+      "ticker": "HD",
+      "name": "The Home Depot, Inc.",
+      "industry": "Home Improvement Retail",
+      "price_history_years": 12.74,
+      "sec_fy_years": {
+        "eps_diluted": 19,
+        "net_income": 19,
+        "revenue": 19
+      },
+      "verified_peers": [
+        "LOW",
+        "FND"
+      ],
+      "peers_dropped_industry_mismatch": [
+        "TSCO",
+        "WSM",
+        "RH"
+      ],
+      "peer_history_years": {
+        "LOW": 12.74,
+        "FND": 9.43
+      },
+      "market_cap_usd": 326972833792,
+      "scores": {
+        "coverage": 1.0,
+        "peers": 0.25,
+        "testability": 0.5,
+        "recognisability": 0.3659
+      },
+      "total": 0.529,
+      "eligible": false,
+      "ineligible_reason": "only 2 same-industry peers (< 5)"
+    }
+  ],
+  "shortlist": [
+    "V",
+    "UNH",
+    "COST"
+  ],
+  "chosen": "V"
+}

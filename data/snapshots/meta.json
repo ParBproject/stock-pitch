@@ -1,0 +1,218 @@
+{
+  "ALLY": {
+    "industry": "Credit Services",
+    "market_cap": 11958089728,
+    "name": "Ally Financial Inc.",
+    "sector": "Financial Services"
+  },
+  "AXP": {
+    "industry": "Credit Services",
+    "market_cap": 219590508544,
+    "name": "American Express Company",
+    "sector": "Financial Services"
+  },
+  "BAC": {
+    "industry": "Banks - Diversified",
+    "market_cap": 357189615616,
+    "name": "Bank of America Corporation",
+    "sector": "Financial Services"
+  },
+  "BJ": {
+    "industry": "Discount Stores",
+    "market_cap": 13468935168,
+    "name": "BJ's Wholesale Club Holdings, Inc.",
+    "sector": "Consumer Defensive"
+  },
+  "C": {
+    "industry": "Banks - Diversified",
+    "market_cap": 205502791680,
+    "name": "Citigroup Inc.",
+    "sector": "Financial Services"
+  },
+  "CI": {
+    "industry": "Healthcare Plans",
+    "market_cap": 83468288000,
+    "name": "The Cigna Group",
+    "sector": "Healthcare"
+  },
+  "CNC": {
+    "industry": "Healthcare Plans",
+    "market_cap": 35192205312,
+    "name": "Centene Corporation",
+    "sector": "Healthcare"
+  },
+  "COF": {
+    "industry": "Credit Services",
+    "market_cap": 124804308992,
+    "name": "Capital One Financial Corporation",
+    "sector": "Financial Services"
+  },
+  "COST": {
+    "industry": "Discount Stores",
+    "market_cap": 451198746624,
+    "name": "Costco Wholesale Corporation",
+    "sector": "Consumer Defensive"
+  },
+  "CVS": {
+    "industry": "Healthcare Plans",
+    "market_cap": 120837128192,
+    "name": "CVS Health Corporation",
+    "sector": "Healthcare"
+  },
+  "DG": {
+    "industry": "Discount Stores",
+    "market_cap": 30690000896,
+    "name": "Dollar General Corporation",
+    "sector": "Consumer Defensive"
+  },
+  "DLTR": {
+    "industry": "Discount Stores",
+    "market_cap": 24587073536,
+    "name": "Dollar Tree, Inc.",
+    "sector": "Consumer Defensive"
+  },
+  "ELV": {
+    "industry": "Healthcare Plans",
+    "market_cap": 96567558144,
+    "name": "Elevance Health, Inc.",
+    "sector": "Healthcare"
+  },
+  "FND": {
+    "industry": "Home Improvement Retail",
+    "market_cap": 5129621504,
+    "name": "Floor & Decor Holdings, Inc.",
+    "sector": "Consumer Cyclical"
+  },
+  "GS": {
+    "industry": "Capital Markets",
+    "market_cap": 259521052672,
+    "name": "The Goldman Sachs Group, Inc.",
+    "sector": "Financial Services"
+  },
+  "HD": {
+    "industry": "Home Improvement Retail",
+    "market_cap": 326972833792,
+    "name": "The Home Depot, Inc.",
+    "sector": "Consumer Cyclical"
+  },
+  "HUM": {
+    "industry": "Healthcare Plans",
+    "market_cap": 50550206464,
+    "name": "Humana Inc.",
+    "sector": "Healthcare"
+  },
+  "JPM": {
+    "industry": "Banks - Diversified",
+    "market_cap": 893715677184,
+    "name": "JPMorgan Chase & Co.",
+    "sector": "Financial Services"
+  },
+  "LOW": {
+    "industry": "Home Improvement Retail",
+    "market_cap": 114662604800,
+    "name": "Lowe's Companies, Inc.",
+    "sector": "Consumer Cyclical"
+  },
+  "MA": {
+    "industry": "Credit Services",
+    "market_cap": 554698276864,
+    "name": "Mastercard Incorporated",
+    "sector": "Financial Services"
+  },
+  "MOH": {
+    "industry": "Healthcare Plans",
+    "market_cap": 11308607488,
+    "name": "Molina Healthcare, Inc.",
+    "sector": "Healthcare"
+  },
+  "MS": {
+    "industry": "Capital Markets",
+    "market_cap": 288937082880,
+    "name": "Morgan Stanley",
+    "sector": "Financial Services"
+  },
+  "PNC": {
+    "industry": "Banks - Regional",
+    "market_cap": 89973768192,
+    "name": "The PNC Financial Services Group, Inc.",
+    "sector": "Financial Services"
+  },
+  "PSMT": {
+    "industry": "Discount Stores",
+    "market_cap": 5295357440,
+    "name": "PriceSmart, Inc.",
+    "sector": "Consumer Defensive"
+  },
+  "PYPL": {
+    "industry": "Credit Services",
+    "market_cap": 49595170816,
+    "name": "PayPal Holdings, Inc.",
+    "sector": "Financial Services"
+  },
+  "RH": {
+    "industry": "Specialty Retail",
+    "market_cap": 2653482240,
+    "name": "RH",
+    "sector": "Consumer Cyclical"
+  },
+  "SYF": {
+    "industry": "Credit Services",
+    "market_cap": 24432095232,
+    "name": "Synchrony Financial",
+    "sector": "Financial Services"
+  },
+  "TFC": {
+    "industry": "Banks - Regional",
+    "market_cap": 59151138816,
+    "name": "Truist Financial Corporation",
+    "sector": "Financial Services"
+  },
+  "TGT": {
+    "industry": "Discount Stores",
+    "market_cap": 71828021248,
+    "name": "Target Corporation",
+    "sector": "Consumer Defensive"
+  },
+  "TSCO": {
+    "industry": "Specialty Retail",
+    "market_cap": 18095722496,
+    "name": "Tractor Supply Company",
+    "sector": "Consumer Cyclical"
+  },
+  "UNH": {
+    "industry": "Healthcare Plans",
+    "market_cap": 381459857408,
+    "name": "UnitedHealth Group Incorporated",
+    "sector": "Healthcare"
+  },
+  "USB": {
+    "industry": "Banks - Regional",
+    "market_cap": 93514252288,
+    "name": "U.S. Bancorp",
+    "sector": "Financial Services"
+  },
+  "V": {
+    "industry": "Credit Services",
+    "market_cap": 777863364608,
+    "name": "Visa Inc.",
+    "sector": "Financial Services"
+  },
+  "WFC": {
+    "industry": "Banks - Diversified",
+    "market_cap": 249166053376,
+    "name": "Wells Fargo & Company",
+    "sector": "Financial Services"
+  },
+  "WMT": {
+    "industry": "Discount Stores",
+    "market_cap": 960935362560,
+    "name": "Walmart Inc.",
+    "sector": "Consumer Defensive"
+  },
+  "WSM": {
+    "industry": "Specialty Retail",
+    "market_cap": 30713892864,
+    "name": "Williams-Sonoma, Inc.",
+    "sector": "Consumer Cyclical"
+  }
+}
