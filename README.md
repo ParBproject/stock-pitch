@@ -87,6 +87,14 @@ Notebooks `02` to `06` compute everything below from frozen snapshots and write 
 ![UNH DCF sensitivity](figures/UNH/04_dcf_growth_sensitivity.png)
 ![UNH backtest](figures/UNH/05_backtest.png)
 
+## M4: the deck
+
+- **Web deck:** [`deck/index.html`](deck/index.html), 12 slides plus two appendix slides. Use ← → to move between slides.
+- **PDF:** [`deck/pitch.pdf`](deck/pitch.pdf).
+- **Build:** both are generated from `results/summary.json` and the committed UNH figures by `scripts/build_deck.py` and `scripts/export_deck.py` (Playwright Chromium).
+- **Tests:** `tests/test_deck.py` checks every number on the slides against the JSON, and fails if any digit appears in slide text that doesn't come from the JSON.
+- **Content:** the risks and scenarios slides state the bear case, the low-beta WACC (and what the full-sample beta does to it), the decline in FCF, and the Sharpe ratios that trail SPY. The appendix covers V and COST as rejected candidates.
+
 ## Reproduce
 
 ```bash
