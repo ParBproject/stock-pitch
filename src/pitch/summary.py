@@ -119,6 +119,9 @@ def analysis_block() -> dict:
     bt, _ = a.backtest()
     return {
         "assumptions": a.ASSUMPTIONS,
+        "business": a.business_snapshot(),
+        "comps_peer_median": a.comps_medians(),
+        "beta_sensitivity": a.beta_sensitivity(),
         "factor_model": fm,
         "comps": comps,
         "valuation": a.dcf(),

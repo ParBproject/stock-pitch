@@ -386,6 +386,75 @@
       "source": "Convention: 5y of daily returns for the CAPM beta"
     }
   },
+  "business": {
+    "2021-09-30": {
+      "revenue": 24105000000.0,
+      "operating_income": 15804000000.0,
+      "net_income": 12311000000.0,
+      "operating_cash_flow": 15227000000.0,
+      "capex": 705000000.0,
+      "fcf": 14522000000.0,
+      "operating_margin": 0.6556,
+      "fcf_margin": 0.6024
+    },
+    "2022-09-30": {
+      "revenue": 29310000000.0,
+      "operating_income": 18813000000.0,
+      "net_income": 14957000000.0,
+      "operating_cash_flow": 18849000000.0,
+      "capex": 970000000.0,
+      "fcf": 17879000000.0,
+      "operating_margin": 0.6419,
+      "fcf_margin": 0.61
+    },
+    "2023-09-30": {
+      "revenue": 32653000000.0,
+      "operating_income": 21000000000.0,
+      "net_income": 17273000000.0,
+      "operating_cash_flow": 20755000000.0,
+      "capex": 1059000000.0,
+      "fcf": 19696000000.0,
+      "operating_margin": 0.6431,
+      "fcf_margin": 0.6032
+    },
+    "2024-09-30": {
+      "revenue": 35926000000.0,
+      "operating_income": 23595000000.0,
+      "net_income": 19743000000.0,
+      "operating_cash_flow": 19950000000.0,
+      "capex": 1257000000.0,
+      "fcf": 18693000000.0,
+      "operating_margin": 0.6568,
+      "fcf_margin": 0.5203
+    },
+    "2025-09-30": {
+      "revenue": 40000000000.0,
+      "operating_income": 23994000000.0,
+      "net_income": 20058000000.0,
+      "operating_cash_flow": 23059000000.0,
+      "capex": 1482000000.0,
+      "fcf": 21577000000.0,
+      "operating_margin": 0.5998,
+      "fcf_margin": 0.5394
+    }
+  },
+  "comps_peer_median": {
+    "ev_ebitda": 15.5803,
+    "pe": 16.1653,
+    "fcf_yield": 0.0797,
+    "n": {
+      "ev_ebitda": 2,
+      "pe": 6,
+      "fcf_yield": 2
+    }
+  },
+  "beta_sensitivity": {
+    "beta": 1.0098,
+    "wacc": 0.133,
+    "implied_value": 163.02,
+    "upside": -0.5463,
+    "source": "same DCF, beta from all daily returns since 2014 vs SPY"
+  },
   "factor_model": {
     "window": {
       "start": "2014-01-03",

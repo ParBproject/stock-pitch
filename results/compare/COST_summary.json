@@ -406,6 +406,75 @@
       "source": "Convention: 5y of daily returns for the CAPM beta"
     }
   },
+  "business": {
+    "2021-08-29": {
+      "revenue": 195929000000.0,
+      "operating_income": 6708000000.0,
+      "net_income": 5007000000.0,
+      "operating_cash_flow": 8958000000.0,
+      "capex": 3588000000.0,
+      "fcf": 5370000000.0,
+      "operating_margin": 0.0342,
+      "fcf_margin": 0.0274
+    },
+    "2022-08-28": {
+      "revenue": 226954000000.0,
+      "operating_income": 7793000000.0,
+      "net_income": 5844000000.0,
+      "operating_cash_flow": 7392000000.0,
+      "capex": 3891000000.0,
+      "fcf": 3501000000.0,
+      "operating_margin": 0.0343,
+      "fcf_margin": 0.0154
+    },
+    "2023-09-03": {
+      "revenue": 242290000000.0,
+      "operating_income": 8114000000.0,
+      "net_income": 6292000000.0,
+      "operating_cash_flow": 11068000000.0,
+      "capex": 4323000000.0,
+      "fcf": 6745000000.0,
+      "operating_margin": 0.0335,
+      "fcf_margin": 0.0278
+    },
+    "2024-09-01": {
+      "revenue": 254453000000.0,
+      "operating_income": 9285000000.0,
+      "net_income": 7367000000.0,
+      "operating_cash_flow": 11339000000.0,
+      "capex": 4710000000.0,
+      "fcf": 6629000000.0,
+      "operating_margin": 0.0365,
+      "fcf_margin": 0.0261
+    },
+    "2025-08-31": {
+      "revenue": 275235000000.0,
+      "operating_income": 10383000000.0,
+      "net_income": 8099000000.0,
+      "operating_cash_flow": 13335000000.0,
+      "capex": 5498000000.0,
+      "fcf": 7837000000.0,
+      "operating_margin": 0.0377,
+      "fcf_margin": 0.0285
+    }
+  },
+  "comps_peer_median": {
+    "ev_ebitda": 10.8341,
+    "pe": 19.6525,
+    "fcf_yield": 0.0282,
+    "n": {
+      "ev_ebitda": 5,
+      "pe": 6,
+      "fcf_yield": 5
+    }
+  },
+  "beta_sensitivity": {
+    "beta": 0.6754,
+    "wacc": 0.108,
+    "implied_value": 414.03,
+    "upside": -0.5452,
+    "source": "same DCF, beta from all daily returns since 2014 vs SPY"
+  },
   "factor_model": {
     "window": {
       "start": "2014-01-03",
