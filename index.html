@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Interactive long pitch for UnitedHealth Group (UNH): DCF, comps, factor exposures, risk and a walk-forward backtest, all reproducible from frozen data.">
+<meta name="theme-color" content="#06080b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Crect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%2310B981%27/%3E%3C/svg%3E">
+<link rel="preload" href="/stock-pitch/assets/fonts/Inter.woff2" as="font" type="font/woff2" crossorigin>
+<title>UNH long pitch: interactive deck</title>
+<link rel="stylesheet" href="/stock-pitch/assets/tokens.css">
+<link rel="stylesheet" href="/stock-pitch/assets/components.css">
+  <script type="module" crossorigin src="/stock-pitch/assets/index-CXDtW7Ul.js"></script>
+  <link rel="stylesheet" crossorigin href="/stock-pitch/assets/index-uoXrmIhS.css">
+</head>
+<body>
+<header class="top">
+  <div><div class="kicker">stock-pitch</div><strong>UNH long pitch</strong> <span class="muted" id="asof">· as of 2026-09-30</span></div>
+  <nav aria-label="Sections" id="toc"></nav>
+</header>
+<main id="deck" aria-live="polite">
+  <section class="panel" id="p-hero" data-title="Recommendation">
+    <div class="kicker">Recommendation</div><h1>UnitedHealth Group (UNH): Long</h1>
+    <p class="lede" id="hero-lede">Base-case DCF value <span class="num">$526.64</span> per share against an as-of price of
+<span class="num">$367.08</span>: <span class="num">+43.5%</span>.</p>
+    <div class="stats" id="hero-stats"><div class="stat"><b>$354.47</b><span>bear (-3.4%)</span></div><div class="stat hl"><b>$526.64</b><span>base (+43.5%)</span></div><div class="stat"><b>$764.68</b><span>bull (+108.3%)</span></div></div>
+    <p class="note" id="hero-note">The bear case is <b>-3.4%</b>. The 8.0% WACC rests on a 5y beta of
+0.41. With the full-sample beta of 0.78, the value is $321.29
+(-12.5%). Intrinsic-value estimate, not a dated price target.</p>
+  </section>
+  <section class="panel" id="p-panel" data-title="Scenario panel">
+    <div class="kicker">Scenario panel</div><h2>Move the inputs, see the value</h2>
+    <div class="sp-layout">
+      <aside class="sp-controls card" id="sp-sheet" aria-label="Scenario inputs">
+        <button class="sp-handle" id="sp-handle" type="button" aria-expanded="true" aria-controls="sp-body"><span></span>Inputs <small id="sp-handle-sum" class="num"></small></button>
+        <div id="sp-body">
+          <fieldset class="sp-field"><legend>Beta behind WACC</legend><div class="seg" id="sp-beta" role="radiogroup"></div></fieldset>
+          <label class="sp-field" for="sp-g">Stage-1 FCF growth <output id="sp-g-out" class="num"></output></label>
+          <input type="range" id="sp-g" min="0" step="1">
+          <label class="sp-field" for="sp-w">WACC <output id="sp-w-out" class="num"></output></label>
+          <input type="range" id="sp-w" min="0" step="1">
+          <div class="sp-presets" id="sp-presets" role="group" aria-label="Scenario presets"></div>
+          <p class="note" id="sp-help"></p>
+        </div>
+      </aside>
+      <div class="sp-out">
+        <div class="sp-target" aria-live="polite"><span class="muted">Value per share</span><b class="num" id="sp-value"></b>
+          <span id="sp-up" class="badge"></span><span class="muted" id="sp-vs"></span></div>
+        <div class="chart sp-chart" id="c-fan" role="img" aria-label="FCF fan chart"></div>
+        <div class="chart sp-chart" id="c-sens" role="img" aria-label="Sensitivity heatmap with the selected inputs marked"></div>
+      </div>
+    </div>
+  </section>
+  <section class="panel" id="p-price" data-title="Price and drawdown">
+    <div class="kicker">Price, brush to analyse</div><h2>UNH vs SPY and peers</h2>
+    <div class="chips" id="peer-chips" role="group" aria-label="Peer filter"></div>
+    <div class="chart" id="c-price" role="img" aria-label="Rebased weekly prices with zoom and brush"></div>
+    <div class="grid3" id="window-stats" aria-live="polite"></div>
+    <p class="note">Drag the slider or brush a range. The stats recompute for that window from weekly adjusted closes. Peer chips are linked to the comps chart.</p>
+  </section>
+  <section class="panel" id="p-comps" data-title="Comps">
+    <div class="kicker">Relative value, click a bar to drill down</div><h2>Comps</h2>
+    <div class="chips" id="metric-chips" role="group" aria-label="Multiple"></div>
+    <div class="two"><div class="chart" id="c-comps" role="img" aria-label="Comps bar chart"></div><div class="card" id="comp-detail"></div></div>
+  </section>
+  <section class="panel" id="p-dcf" data-title="DCF">
+    <div class="kicker">Valuation, hover or click a cell</div><h2>DCF value by stage-1 growth and WACC</h2>
+    <div class="two"><div class="chart" id="c-dcf" role="img" aria-label="DCF sensitivity heatmap"></div><div class="card" id="dcf-detail"></div></div>
+  </section>
+  <section class="panel" id="p-scen" data-title="Scenarios">
+    <div class="kicker">Scenarios</div><h2>Bull, base and bear</h2>
+    <div class="two"><div class="chart" id="c-scen" role="img" aria-label="Scenario values vs price"></div><div class="card" id="scen-detail"></div></div>
+  </section>
+  <section class="panel" id="p-factors" data-title="Factors">
+    <div class="kicker">Exposures, toggle factors and zoom</div><h2>Rolling 252-day factor betas</h2>
+    <div class="chart" id="c-factors" role="img" aria-label="Rolling factor betas"></div>
+    <p class="note" id="factor-note"></p>
+  </section>
+  <section class="panel" id="p-bt" data-title="Backtest">
+    <div class="kicker">Evidence</div><h2>Walk-forward signal vs buy-and-hold and SPY</h2>
+    <div class="chart" id="c-bt" role="img" aria-label="Backtest growth of one dollar"></div>
+    <div id="bt-table"></div>
+  </section>
+  <section class="panel" id="p-risks" data-title="Risks">
+    <div class="kicker">Risks</div><h2>What would change my mind</h2>
+    <ul class="risks" id="risk-list"></ul>
+  </section>
+  <section class="panel" id="p-rej" data-title="Rejected">
+    <div class="kicker">Appendix</div><h2>Rejected candidates</h2>
+    <div id="rejected"></div>
+    <p class="note">All candidates were run with the same code and assumptions. Data: Yahoo Finance, SEC EDGAR XBRL, Ken French library, FRED. Educational project, not investment advice. <a href="https://github.com/ParBproject/stock-pitch">Source on GitHub</a> · <a href="deck/pitch.pdf">PDF deck</a> · <a href="deck/">Slide deck</a> · <a href="deck/style-guide.html">Style guide</a>.</p>
+  </section>
+</main>
+</body>
+</html>
