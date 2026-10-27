@@ -1,5 +1,5 @@
-// M7 scenario panel. All values are looked up in a surface precomputed by the Python DCF (src/pitch/webdata.py);
-// nothing is estimated in the browser. Defaults reproduce results/summary.json exactly (pinned by tests).
+// Scenario panel. Values are looked up in a surface precomputed by the Python DCF (src/pitch/webdata.py).
+// The browser does not reprice the model. Defaults match results/summary.json (checked in tests).
 import { pct, spct, usd, n2 } from "./fmt.js";
 
 export function initPanel({ D, el, mount, base, axis, T, tok, reduced }) {

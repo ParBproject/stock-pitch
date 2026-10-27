@@ -8,13 +8,20 @@ from pitch.config import AS_OF
 from pitch.data import ROOT, load_factors, load_fundamentals, load_manifest, load_prices
 from pitch.universe import ACTIVE, BENCHMARK, CONCEPTS, PITCHES
 
-ARCHIVE_REASON = {
-    "V": (
-        "Dropped after M3: the base DCF gave 199.15 vs a 359.33 price (-44.6%), even the bull case was -25.5%, "
-        "and the price implied 28.4% stage-1 FCF growth vs a 12.9% historical median. Frank re-picked from the shortlist "
-        "with the same methods and assumptions (no tuning)."
+ARCHIVED = ("V",)
+
+
+def archive_reason(pitch: dict) -> str:
+    """Why an earlier pick was set aside, using that pick's own valuation output."""
+    v, sc = pitch["valuation"], pitch["scenarios"]
+    return (
+        f"First screen pick. The base DCF was {v['implied_value']:.2f} against a {v['price']:.2f} price "
+        f"({v['upside'] * 100:.1f}%), the bull case was {sc['bull']['upside'] * 100:.1f}%, and the price implied "
+        f"{v['reverse_dcf_stage1_growth'] * 100:.1f}% stage-1 FCF growth against a {v['stage1_growth'] * 100:.1f}% "
+        "historical median. The pitch moved to the next name on the shortlist, using the same assumptions."
     )
-}
+
+
 COMPARED = ["UNH", "COST"]  # UNH's bear case is below the price, so COST (next on the shortlist) is run the same way
 PITCH_FILES = {"V": "results/archive/V_summary.json", "COST": "results/compare/COST_summary.json"}
 
@@ -92,7 +99,7 @@ def build_all() -> dict[str, dict]:
     pitches = {t: build_pitch(t) for t in ["V", *COMPARED]}
     active = dict(pitches[ACTIVE])
     active["comparison"] = comparison({t: pitches[t] for t in COMPARED})
-    active["archived"] = {t: {"reason": r, "summary_file": PITCH_FILES[t]} for t, r in ARCHIVE_REASON.items()}
+    active["archived"] = {t: {"reason": archive_reason(pitches[t]), "summary_file": PITCH_FILES[t]} for t in ARCHIVED}
     active["compared_with"] = {t: PITCH_FILES[t] for t in COMPARED if t != ACTIVE}
     files = {"results/summary.json": active}
     for t, path in PITCH_FILES.items():

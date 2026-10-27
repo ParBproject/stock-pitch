@@ -1,8 +1,7 @@
-"""Render the HTML web deck from results/summary.json.
+"""Render the HTML deck from results/summary.json.
 
-Every number on a slide is emitted through N(), which wraps it in <span class="n" data-k=PATH data-f=FORMAT>.
-tests/test_deck.py re-resolves each PATH in the JSON, re-formats it and checks it matches, then checks that
-no other digits appear in slide text (apart from a small allowlist of labels like "10-K").
+Slide numbers go through N(), which marks the JSON path. tests/test_deck.py checks each one.
+Other digits in the slide text have to be listed in ALLOWED_TOKENS or ALLOWED_PATTERNS.
 """
 
 from __future__ import annotations
@@ -25,7 +24,6 @@ ALLOWED_TOKENS = [
     "Stage-1",
     "stage-1",
     "SHA-256",
-    "after M3",
     "10-K",
     "FF5",
     "252-day",
@@ -96,7 +94,8 @@ def render(data: dict) -> tuple[str, list[str]]:
     t = data["ticker"]
     v, fm = data["valuation"], data["factor_model"]
     years = sorted(data["business"])
-    y0, y_peak, y1 = years[0], "2023-12-31", years[-1]
+    y0, y1 = years[0], years[-1]
+    y_peak = max(years, key=lambda y: data["business"][y]["fcf"])
     w = "valuation.wacc_inputs"
     slides: list[tuple[str, str, str]] = []
 
@@ -182,7 +181,7 @@ Value {N("valuation.implied_value", "usd2")}. The price implies {N("valuation.re
     )
     slides.append(
         (
-            "Factor exposures: what you are really buying",
+            "Factor exposures",
             f"""<div class="two"><table class="sm"><thead><tr><th>Factor</th><th>Beta</th><th>t-stat</th></tr></thead><tbody>{brows}
 <tr><td>Alpha (annual)</td><td>{N("factor_model.alpha_annual", "pct1")}</td><td>{N("factor_model.alpha_t", "t1")}</td></tr></tbody></table>
 <img class="fig" src="assets/02_rolling_betas.png" alt="Rolling factor betas"></div>
@@ -300,7 +299,7 @@ each number on these slides against that file.</li>
 <p><b>V (first pick, archived).</b> {_strip_digits_note(arch["V"]["reason"])} See <code>results/archive/V_summary.json</code>.</p>
 <p><b>COST (third on the shortlist).</b> Every scenario, including bull at {N("comparison.COST.bull", "usd2")}, is below the price. The price
 implies {N("comparison.COST.reverse_dcf_stage1_growth", "pct1")} stage-1 growth.</p>
-<p class="note">All three were run with identical code and assumptions. Nothing was tuned to make a long case appear.</p>""",
+<p class="note">V, UNH and COST use the same code and the same assumptions.</p>""",
             "Appendix",
         )
     )
@@ -316,8 +315,8 @@ implies {N("comparison.COST.reverse_dcf_stage1_growth", "pct1")} stage-1 growth.
 def _strip_digits_note(reason: str) -> str:
     """The archive reason is free text from summary.py; numbers in it are re-emitted from the V summary instead."""
     return (
-        "Dropped after M3: the base DCF was well below the price, even the bull case showed a loss, and the price implied far "
-        "more FCF growth than V's history."
+        "First screen pick. The base DCF was well below the price, the bull case was also below the price, "
+        "and the price implied more FCF growth than V's history."
     )
 
 

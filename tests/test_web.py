@@ -36,7 +36,7 @@ def test_web_app_uses_design_tokens():
     assert "max-width:720px" in app and "scroll-snap-type:x mandatory" in app
 
 
-# ---------- M7 scenario panel ----------
+# ---------- scenario panel ----------
 def _panel():
     import json
     from pathlib import Path

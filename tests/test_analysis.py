@@ -80,7 +80,7 @@ def test_cost_headlines_pinned():
     assert not C["verdict"]["supports_long"]
 
 
-def test_v_archive_unchanged_from_m3():
+def test_v_archive_matches_frozen_results():
     v, sc = V["valuation"], V["scenarios"]
     assert (v["price"], v["implied_value"], v["upside"], v["reverse_dcf_stage1_growth"]) == (359.33, 199.15, -0.4458, 0.2838)
     assert (sc["bear"]["target"], sc["base"]["target"], sc["bull"]["target"]) == (166.71, 199.15, 267.85)

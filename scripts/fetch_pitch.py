@@ -1,6 +1,6 @@
 """Fetch and freeze all snapshots for one pitch into data/raw_<TICKER> (needs network).
 
-Same sources, point-in-time rules and code paths as V's M2/M3 data. Usage: python scripts/fetch_pitch.py UNH
+Same sources and point-in-time rules as data/raw. Usage: python scripts/fetch_pitch.py UNH
 """
 
 import hashlib

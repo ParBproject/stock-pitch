@@ -1,8 +1,8 @@
-"""M3 analysis: factor model, comps, DCF and reverse DCF, risk, walk-forward backtest, scenarios.
+"""Factor model, comps, DCF and reverse DCF, risk, walk-forward backtest, and scenarios.
 
-Every input comes from the frozen snapshots in data/raw. The few modelling choices that are not
-data (terminal growth, scenario WACC shift, trading cost, signal grid) are named in ASSUMPTIONS,
-so they are visible in results/summary.json and in the deck.
+Inputs come from the frozen snapshots in data/raw. Choices that are not in the data
+(terminal growth, scenario WACC shift, trading cost, signal grid) live in ASSUMPTIONS
+and are written into results/summary.json.
 """
 
 from __future__ import annotations
@@ -74,7 +74,7 @@ ASSUMPTIONS = {
 }
 
 
-# ---------- helpers ----------
+# helpers
 def all_fundamentals() -> pd.DataFrame:
     extra = pd.read_csv(_raw() / "fundamentals_extra.csv", parse_dates=["period_end", "filed"])
     return pd.concat([load_fundamentals(), extra], ignore_index=True)
@@ -113,7 +113,7 @@ def r(x: float, n: int = 4) -> float | None:
     return None if x is None or not np.isfinite(x) else round(float(x), n)
 
 
-# ---------- 02 factor model ----------
+# factor model
 def factor_model() -> tuple[dict, pd.DataFrame]:
     f = load_factors()
     ret = load_returns()[_t()]
@@ -140,7 +140,7 @@ def factor_model() -> tuple[dict, pd.DataFrame]:
     return out, rolling
 
 
-# ---------- 03 comps ----------
+# comps
 def comps() -> pd.DataFrame:
     sh = shares()
     rows = []
@@ -231,7 +231,7 @@ def comps_medians() -> dict:
     }
 
 
-# ---------- 04 DCF ----------
+# DCF
 def fcf_history() -> pd.Series:
     fy = fy_table(_t())
     return (fy["operating_cash_flow"] - fy["capex"]).dropna()
@@ -338,7 +338,7 @@ def dcf() -> dict:
     }
 
 
-# ---------- 05 risk + backtest ----------
+# risk and backtest
 def risk_metrics(ret: pd.Series, bench: pd.Series) -> dict:
     ret, bench = ret.dropna().align(bench.dropna(), join="inner")
     wealth = (1 + ret).cumprod()
@@ -409,7 +409,7 @@ def backtest() -> tuple[dict, pd.DataFrame]:
     return out, (1 + curves).cumprod()
 
 
-# ---------- 06 scenarios ----------
+# scenarios
 def scenario_params() -> dict:
     """Exact (unrounded) stage-1 growth and WACC for bear/base/bull."""
     wacc = dcf()["wacc_inputs"]["wacc"]["value"]

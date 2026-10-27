@@ -1,4 +1,4 @@
-"""Fetch and freeze M2 snapshots into data/raw (needs network). Tests never call this.
+"""Fetch and freeze prices, factors and 10-K facts into data/raw (needs network). Tests never call this.
 
 Point-in-time rule: only data dated on/before AS_OF, and SEC facts filed on/before AS_OF.
 """

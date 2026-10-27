@@ -1,14 +1,14 @@
-"""Pitch universes: each candidate, its verified peers (from results/screen.json) and the benchmark.
+"""Each pitch: ticker, verified peers, and the benchmark.
 
-V was the first pick (M2/M3, data in data/raw). It was archived after its DCF showed no upside;
-the pitch moved to the next screen candidates, whose data live in data/raw_<TICKER>.
+V was the first pick (snapshots in data/raw). Its DCF came in below the price, so it was archived.
+Later names use data/raw_<TICKER>.
 """
 
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[2]
 
-# Archived first pick (kept for M2 compatibility).
+# Archived first pick. data/raw still holds its snapshots.
 TICKER = "V"
 PEERS = ["MA", "AXP", "PYPL", "COF", "SYF", "ALLY"]
 BENCHMARK = "SPY"

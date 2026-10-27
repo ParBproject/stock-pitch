@@ -1,4 +1,4 @@
-"""Frozen M1 screen configuration. Changing anything here requires re-running scripts/fetch_data.py."""
+"""Screen settings. Snapshots are frozen as of AS_OF; a different universe means re-running scripts/fetch_data.py."""
 
 import os
 
