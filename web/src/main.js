@@ -5,7 +5,7 @@ import "./app.css";
 let echartsP = null;
 const loadEcharts = () => (echartsP ??= import("./echarts-setup.js").then((m) => m.default));
 
-// ---------- design tokens (from tokens.css, the M5 single source) ----------
+// Design tokens, read from tokens.css.
 const css = getComputedStyle(document.documentElement);
 const tok = (n) => css.getPropertyValue(n).trim();
 const T = {
@@ -76,7 +76,7 @@ const peakFcfYear = years.reduce((a, b) => (S.business[b].fcf > S.business[a].fc
   }
 }
 
-// ---------- M7 scenario panel ----------
+// ---------- scenario panel ----------
 window.__panel = initPanel({ D, el, mount, base, axis, T, tok, reduced });
 
 // ---------- linked state ----------

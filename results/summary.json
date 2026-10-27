@@ -733,7 +733,7 @@
   },
   "archived": {
     "V": {
-      "reason": "Dropped after M3: the base DCF gave 199.15 vs a 359.33 price (-44.6%), even the bull case was -25.5%, and the price implied 28.4% stage-1 FCF growth vs a 12.9% historical median. Frank re-picked from the shortlist with the same methods and assumptions (no tuning).",
+      "reason": "First screen pick. The base DCF was 199.15 against a 359.33 price (-44.6%), the bull case was -25.5%, and the price implied 28.4% stage-1 FCF growth against a 12.9% historical median. The pitch moved to the next name on the shortlist, using the same assumptions.",
       "summary_file": "results/archive/V_summary.json"
     }
   },

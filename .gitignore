@@ -9,3 +9,10 @@ build/
 dist/
 .DS_Store
 site/
+
+# Local agent tooling (not part of the project)
+.cursor/
+.cursorrules
+AGENTS.md
+PLAN.md
+*.plan.md

@@ -1,4 +1,4 @@
-"""Fetch and freeze M1 data snapshots (needs network). Tests never call this."""
+"""Fetch and freeze the screen snapshots (needs network). Tests never call this."""
 
 import hashlib
 import json

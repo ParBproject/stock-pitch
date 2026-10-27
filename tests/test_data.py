@@ -8,7 +8,7 @@ from pitch.config import AS_OF
 from pitch.summary import build_pitch
 from pitch.universe import ALL_TICKERS, CIKS, PEERS, TICKER
 
-SUMMARY = json.loads((data.ROOT / "results" / "archive" / "V_summary.json").read_text())  # V data (M2)
+SUMMARY = json.loads((data.ROOT / "results" / "archive" / "V_summary.json").read_text())  # archived V snapshots
 
 
 def test_manifest_hashes_match():

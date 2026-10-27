@@ -1,4 +1,4 @@
-"""Offline loaders for the frozen M2 snapshots in data/raw. Nothing here touches the network."""
+"""Loaders for the frozen snapshots in data/raw. These functions do not use the network."""
 
 from __future__ import annotations
 

@@ -92,7 +92,7 @@ def _bn(x: float) -> str:
 
 
 def render_pitch(s: dict) -> str:
-    """Headline numbers and honest risks for the employer-facing README, all from results/summary.json."""
+    """Headline numbers and risks for the README, taken from results/summary.json."""
     v, sc, bt, bs, fm = s["valuation"], s["scenarios"], s["backtest"], s["beta_sensitivity"], s["factor_model"]
     w = v["wacc_inputs"]
     t = s["ticker"]
@@ -123,20 +123,18 @@ def render_pitch(s: dict) -> str:
         f"{s['assumptions']['trading_cost_bps']['value']} bp costs), Sharpe with rf = 0: trend signal {bt['strategy']['sharpe_rf0']:.2f}, "
         f"buy-and-hold {bt['buy_hold']['sharpe_rf0']:.2f}, {s['benchmark']} {bt['SPY']['sharpe_rf0']:.2f}.",
         "",
-        "### Honest risks",
+        "### Risks",
         "",
-        f"- **The call depends on beta.** The 5-year beta of {w['beta']['value']:.2f} gives WACC {w['wacc']['value'] * 100:.2f}% and "
+        f"- **Beta.** A 5-year beta of {w['beta']['value']:.2f} gives WACC {w['wacc']['value'] * 100:.2f}% and "
         f"${v['implied_value']:.2f}. The full-sample beta ({bs['beta']:.2f}) gives WACC {bs['wacc'] * 100:.2f}% and "
-        f"**${bs['implied_value']:.2f} ({_pct(bs['upside'])})**, below the price. The low recent beta reflects a period when "
-        f"{t}'s own news dominated its returns (factor-model R² {fm['r_squared']:.2f}).",
-        f"- **The bear case is below the price** (${sc['bear']['target']:.2f}, {_pct(sc['bear']['upside'])}): this is a long with "
-        "downside, not a margin of safety in every scenario.",
-        f"- **FCF is falling:** {_bn(s['business'][peak]['fcf'])} in FY{peak[:4]} to {_bn(s['business'][last]['fcf'])} in FY{last[:4]}, "
-        "while base-case growth uses the long-run median.",
-        f"- **Margins:** operating margin {_pct(s['business'][last]['operating_margin'])} in FY{last[:4]} vs "
-        f"{_pct(s['business'][peak]['operating_margin'])} in FY{peak[:4]}. The upside needs a recovery that is not yet in the numbers.",
-        f"- **Risk and signals trail the market:** max drawdown {_pct(rk[t]['max_drawdown'])} vs {_pct(rk['SPY']['max_drawdown'])} for "
-        f"{s['benchmark']} since {s['risk']['full']['start']}; both the trend signal and buy-and-hold trail {s['benchmark']} on Sharpe.",
+        f"**${bs['implied_value']:.2f} ({_pct(bs['upside'])})**, below the price. Factor-model R² is {fm['r_squared']:.2f}.",
+        f"- **Bear case.** ${sc['bear']['target']:.2f} ({_pct(sc['bear']['upside'])}), below the price.",
+        f"- **FCF.** {_bn(s['business'][peak]['fcf'])} in FY{peak[:4]} to {_bn(s['business'][last]['fcf'])} in FY{last[:4]}. "
+        "Base-case growth is still the median of the rolling 5-year FCF growth rates.",
+        f"- **Margins.** Operating margin {_pct(s['business'][last]['operating_margin'])} in FY{last[:4]}, "
+        f"against {_pct(s['business'][peak]['operating_margin'])} in FY{peak[:4]} (the peak-FCF year).",
+        f"- **Drawdown and the signal.** Max drawdown {_pct(rk[t]['max_drawdown'])} vs {_pct(rk['SPY']['max_drawdown'])} for "
+        f"{s['benchmark']} since {s['risk']['full']['start']}. The trend signal and buy-and-hold both trail {s['benchmark']} on Sharpe.",
         PITCH_END,
     ]
     return "\n".join(lines)

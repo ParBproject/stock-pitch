@@ -40,10 +40,7 @@ def main() -> None:
         w, h = Image.open(deck / src).size
         return f'<img{m.group(0)[4:-1].replace(src, src[:-4] + ".webp")} width="{w}" height="{h}" loading="lazy" decoding="async">'
 
-    desc = (
-        '<meta name="description" content="UNH long pitch: DCF, reverse DCF, comps, factor model, '
-        'risk and backtest, every number generated from code.">'
-    )
+    desc = '<meta name="description" content="UNH long pitch: DCF, reverse DCF, comps, factor model, risk and backtest.">'
     for page in ("index.html", "style-guide.html"):
         f = deck / page
         h = re.sub(r'<img[^>]*src="(assets/[^"]+\.png)"[^>]*>', img, f.read_text())

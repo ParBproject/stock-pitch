@@ -1,5 +1,6 @@
-"""Export the data the interactive web deck needs (web/public/data/pitch.json). Every value is computed
-from results/summary.json or the frozen snapshots by the same functions the notebooks use."""
+"""Write web/public/data/pitch.json from results/summary.json and the frozen snapshots.
+
+The browser reads this file. The DCF values use the same functions as the notebooks."""
 
 from __future__ import annotations
 

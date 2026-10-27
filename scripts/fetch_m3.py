@@ -1,6 +1,6 @@
-"""Fetch extra M3 snapshots into data/raw and add them to the manifest (needs network).
+"""Fetch the extra valuation snapshots into data/raw and add them to the manifest (needs network).
 
-M2 files are left untouched. Point-in-time rule: nothing dated or filed after AS_OF.
+Files already in the manifest are left untouched. Point-in-time rule: nothing dated or filed after AS_OF.
 """
 
 import hashlib
